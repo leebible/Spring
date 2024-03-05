@@ -13,7 +13,7 @@
             <select name="name">
             ${options }
             </select>
-            <button type="submit">이미지 랜더링</button>
+            <button type="submit">이미지 랜더링222</button>
         </form>
         <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/app/04/imageForm.js"></script>
     </body>
