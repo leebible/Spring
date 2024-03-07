@@ -8,7 +8,7 @@
 </head>
 <body>
 <h4>request(HttpServletRequest)</h4>
-<form method="get" enctype="multipart/form-data">
+<form method="post" >
 	<input type="text" name="param1" value="VALUE1" />
 	<input type="text" name="param2" value="VALUE2" />
 	<input type="file" name="sendFile" />
@@ -18,7 +18,7 @@
 	: http 프로토콜로 패키징된 요청에 대한 정보와 해당 요청을 발생시킨 클라이언트에 대한 정보를 가진 객체.
 	
 	HTTP(Hyper Text Transfer Protocol) ; HTML 문서 전송시 패키징 규칙성에 대한 정의 
-	1. Request Line : URL(명사, 자원에 대한 식별자), request Method
+	1. Request Line : URL(명사, 자원에 대한 식별자), request Method (편지봉투1)
 		request Method(자원에 대한 행위를 표현하는 동사) : 요청의 목적(의도)과 패키징 구조에 대한 표현
 		GET-R (클라이언트가 사용하는 기본 method) : 조회 
 		POST-C : 새로운 자원 등록
@@ -40,8 +40,8 @@
 		
 		
 		
-	2. Request Header : 클라이언트의 요청을 부가적으로 수식해주는 메타데이터의 영역 
-	(다 외우진 못해도 이정도는 외우기)
+	2. Request Header : 클라이언트의 요청을 부가적으로 수식해주는 메타데이터의 영역 (편지봉투2)
+	(다 외우진 못해도 이정도는 외우기 Accept, content, user-agent)
 		header name : header value
 		Accept-*
 		Accept : response content-type 을 표현
@@ -58,7 +58,8 @@
 				multipart/form-data (편지지가 여러장)
 		Content-length : body content length 표현
 		User-Agent : 클라이언트가 사용하고 있는 시스템이나 브라우저 랜더링 엔진에 대한 표현. (ex 모바일/웹 구분)
-	3. Request Body(Content Body, Message Body) : POST 요청에서만 형성되는 영역으로 전송 컨텐츠의 영역.
+		
+	3. Request Body(Content Body, Message Body) : POST 요청에서만 형성되는 영역으로 전송 컨텐츠의 영역.(편지내용)
 		1) request parameter : application/x-www-form-urlencoded MIME에 따라 
 				전송 가능한 직렬화된 문장으로 데이터가 전송됨. (파라미터가 넘어갈때는 String으로 넘어감 )
 				ex) name=value&name=value

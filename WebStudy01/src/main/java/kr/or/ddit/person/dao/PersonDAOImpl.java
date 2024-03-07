@@ -26,7 +26,6 @@ public class PersonDAOImpl implements PersonDAO {
 		}catch (IOException e) {
 			throw new UncheckedIOException(e); //CheckedIO를 UncheckedIO로 바꿔주는 메소드
 		}
-		
 	}
 
 	

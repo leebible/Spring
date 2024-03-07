@@ -21,8 +21,6 @@
 	8. exception(Throwable) : 에러를 처리하기 위한 에러페이지에서 활성화됨.
 	
 	9. pageContext(PageContext) : 
-	
-	${pageContext. }
 </pre>
 </body>
 </html>

@@ -10,6 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form name="personForm" action="<%=request.getContextPath() %>/people.do" method="post">
+	<input type="text" name="who" />
+</form>
 <table>
 	<thead>
 		<tr>
@@ -24,12 +27,22 @@
 			%>
 		<tr>
 			<td><%=once.getId() %></td>
-			<td><%=once.getName() %></td>
+			<td><a href="javascript:;" onclick="clickHandler(event);" data-member-id="<%=once.getId()%>"><%=once.getName() %></a></td><%--javascript:;  : dummy script --%>
+			<%--html은 대소문자를 구분하지 못하기 때문에 data-뒤에 camel표기법으로 이용하려면 memberId 이걸 member-id라고 하면 웹에서는 memberId로 보임!!!!!!! --%>
 		</tr>	
-			<%
+			<%s
 		}
 	%>
 	</tbody>
 </table>
+<script>
+	function clickHandler(event){
+		event.preventDefault();
+		let aTag = event.target;
+		console.log(aTag.dataset.memberId);
+		document.personForm.who.value = aTag.dataset.memberId;
+		document.personForm.requestSubmit();
+	}
+</script>
 </body>
 </html>

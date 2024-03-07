@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.person.dao.PersonDAO;
 import kr.or.ddit.person.dao.PersonDAOImpl;
+import kr.or.ddit.person.exception.PersonNotFoundException;
 import kr.or.ddit.vo.PersonVO;
 
 public class PersonServiceImpl implements PersonService{
@@ -20,7 +21,10 @@ public class PersonServiceImpl implements PersonService{
 
 	@Override
 	public PersonVO retrievePerson(String id) {
-		return null;
+		PersonVO person = dao.selectPerson(id);
+		if(person==null)
+			throw new PersonNotFoundException(id); //custom exception. 보통  business logic에서 많이 쓰임
+		return person;
 	}
 
 }
