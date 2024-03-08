@@ -9,6 +9,8 @@
 <body>
 <h4>request(HttpServletRequest)</h4>
 <form method="post" >
+	<input type="hidden" name="_method" value="put"/> <!-- post이지만 사실 put을 위한 메소드. hidden : 전송하기 위한 메소드 -->
+	<input type="hidden" name="_method" value="delete"/> <!-- post이지만 사실 delete 위한 메소드 -->
 	<input type="text" name="param1" value="VALUE1" />
 	<input type="text" name="param2" value="VALUE2" />
 	<input type="file" name="sendFile" />
@@ -22,8 +24,8 @@
 		request Method(자원에 대한 행위를 표현하는 동사) : 요청의 목적(의도)과 패키징 구조에 대한 표현
 		GET-R (클라이언트가 사용하는 기본 method) : 조회 
 		POST-C : 새로운 자원 등록
-		PUT/PATCH-U : 기존 자원의 수정 (수정방식의 차이)
-		DELETE-D : 기존 자원의 삭제
+		PUT/PATCH-U : 기존 자원의 수정 (수정방식의 차이) <!-- body가 필요 -->
+		DELETE-D : 기존 자원의 삭제 <!-- 때에 따라서 body가 필요한경우 있음(비밀번호 보낼때) -->
 		OPTION : preFlight 요청에 사용됨 (서버의 상태를 확인하는 용도로 사용)
 		HEAD : response body가 없는 line과 header로만 구성된 response 받기 위한 요청
 		TRACE : 대부분의 요청은 이 옵션을 막고 있음

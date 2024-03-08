@@ -31,7 +31,8 @@
 <h4>request 기본객체 활용</h4>
 <pre>
 	1. Line
-		<%=request.getRequestURI() %>, <%=request.getMethod() %>
+		<%=request.getRequestURL() %>, <%=request.getMethod() %>
+		<%=request.getRequestURI() %> <!-- 이형태가 더 많이 쓰임 -->
 	2. Header
 		getHeader(name), getheaderNames(), getDate[Int]Header(name)
 	3. Body
@@ -49,7 +50,7 @@
 	</thead>
 	<tbody>
 	<%	
-		request.setCharacterEncoding("UTF-8");
+		//request.setCharacterEncoding("UTF-8");
 		StringBuffer trTags = new StringBuffer();
 		String ptrn = "<tr></td>%s</td><td>%s</td></tr>\n";
 		Map<String,String[]> pmap = request.getParameterMap();
