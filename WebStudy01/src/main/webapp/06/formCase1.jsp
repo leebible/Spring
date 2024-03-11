@@ -8,7 +8,7 @@
 </head>
 <body>
 
-
+<!-- Case1 : 모든 방식(비동기,동기)이 get방식으로 -->
 <form action="<%=request.getContextPath() %>/06/case1Req.do" method="get">
 	<pre>
 		<a href="<%=request.getContextPath() %>/06/case1Req.do">요청1</a> <!-- a태그는 별개로 동작. form태그 전송을 눌러도 넘어가지 않음 -->

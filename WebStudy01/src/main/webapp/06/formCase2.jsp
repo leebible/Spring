@@ -8,6 +8,7 @@
 </head>
 <body>
 <h4>POST 요청</h4>
+<!-- Case2 : 모든 방식(비동기,동기)이 post방식으로 -->
 <form action="<%=request.getContextPath() %>/06/case2Req.do" method="post">
 	<pre>
 		<a href="<%=request.getContextPath() %>/06/case2Req.do" data-p5="34">요청1</a> <!-- a태그는 별개로 동작. form태그 전송을 눌러도 넘어가지 않음 -->
@@ -43,6 +44,7 @@
 		<button type="reset">취소</button>
 	</pre>
 </form>
+<div id="resultArea"></div>
 <script src="<%=request.getContextPath() %>/resources/js/app/06/formCase2.js"></script>
 </body>
 </html>

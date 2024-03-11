@@ -72,7 +72,8 @@ forms[0].addEventListener("submit", e=>{
 				throw new Error(`에러발생, 상태코드 : ${resp.status}`);
 			}
 		}).then(html=>{
-			document.body.innerHTML = document.body.innerHTML + html;		
+			//document.body.innerHTML = document.body.innerHTML + html;
+			resultArea.innerHTML=html; //(안좋은 코드임)
 			})
 		.catch(err=>console.log(err));
 });

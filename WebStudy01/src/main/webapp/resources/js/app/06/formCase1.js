@@ -68,7 +68,12 @@ forms[0].addEventListener("submit", e=>{
 				throw new Error(`에러발생, 상태코드 : ${resp.status}`);
 			}
 		}).then(html=>{
-			document.body.innerHTML = document.body.innerHTML + html;		
+			//document.body.innerHTML = document.body.innerHTML + html;	
+			let parser = new DOMParser();
+			let newDoc = parser.parseFromString(html, 'text/html') //새로운 document를 만든것임
+			let h4Element = newDoc.querySelector("h4")
+			document.body.append(h4Element);
+				
 			})
 		.catch(err=>console.log(err));
 });
