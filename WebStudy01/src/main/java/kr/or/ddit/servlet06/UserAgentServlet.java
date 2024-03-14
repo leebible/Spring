@@ -18,6 +18,11 @@ import kr.or.ddit.enumpkg.BrowserInfo;
 @WebServlet("/07/userAgent.do")
 public class UserAgentServlet extends HttpServlet{
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+	}
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
 		String userAgent = req.getHeader("user-agent").toUpperCase();

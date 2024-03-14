@@ -1,6 +1,37 @@
 /**
  * 
  */
+//선생님이 해주신 '사용자브라우저식별(클라이언트사이드)'숙제의 다른방법!!!!
+window['ua-btn'].addEventListener("click", (e)=>{
+	//preventDefault할 필요가 없음. form태그가 아니기 때문에!
+	let agent = window.navigator.userAgent;
+	const BrowserInfo = {
+		EDG:"엣지",
+	    CHROME:"크롬",
+	    WHALE:"웨일",
+	    OTHERS:":기타",
+		findBrowserName : function(agent){ //javascript에서도 함수를 가질수 잇음
+			agent = agent.toUpperCase();
+			let browserName = this.OTHERS;
+			for(let prop in this){
+				if(agent.indexOf(prop)>=0){ //userAgent안에 EDG~WHALE이 포함되어있으면
+					browserName = this[prop];
+					break;
+				}
+			}
+			return browserName;
+		}
+	}
+	BrowserInfo['SAFARI'] = "사파리";//연산괄호 기호로 접근할 수 있음
+	//함수도 객체라서 BrowserInfo안의 객체가 총 6개가 들어있는것!
+	
+	let brName = BrowserInfo.findBrowserName(agent);
+	msgArea.innerHTML = brName;
+	
+	
+})
+
+
 let aTags = document.querySelectorAll("a")
 console.log(aTags);
 aTags.forEach(v=>{

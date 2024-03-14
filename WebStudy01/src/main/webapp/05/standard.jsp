@@ -1,13 +1,7 @@
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>05/standard.jsp</title>
-</head>
-<body>
+
 <h4>JSP(Java Server Page)</h4>
 <pre>
 	: 자바와 서블릿 스펙을 기반으로 SSR을 구현하는 템플릿 엔진.
@@ -64,5 +58,3 @@
 		
 
  </pre>
-</body>
-</html>

@@ -19,7 +19,7 @@
 
 
 
-<button id="btn">사용자브라우저식별(클라이언트사이드)</button>
+<button id="ua-btn">사용자브라우저식별(클라이언트사이드)</button>
 <!-- 윈도우네비게이터 어쩌구 쓰기.. -->
 <div id="msgArea">
 
