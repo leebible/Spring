@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.or.ddit.exception.ResponseStatusException;
 
 @WebServlet("/login/loginProcess.do")
 public class LoginProcessControllerServlet extends HttpServlet {
@@ -17,6 +20,8 @@ public class LoginProcessControllerServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(); //최초의 요청이 아니라 id가 없을수 없음!
+		
 		//1. body영역의 디코딩에 사용할 charset 결정. 단어가 encoding라도 실제로는 디코딩하는것!
 		req.setCharacterEncoding("UTF-8");
 		try {
@@ -26,23 +31,23 @@ public class LoginProcessControllerServlet extends HttpServlet {
 		//- 검증 통과
 			String memId = Optional.of(req.getParameter("memId"))
 					.filter(id->!id.isEmpty())
-					.orElseThrow(()->new IllegalArgumentException("아이디 누락"));
+					.orElseThrow(()->new ResponseStatusException(400, "아이디 누락"));
 			
 			String memPass = Optional.of(req.getParameter("memPass"))
 					.filter(id->!id.isEmpty())
-					.orElseThrow(()->new IllegalArgumentException("비밀번호 누락"));
+					.orElseThrow(()->new ResponseStatusException(400,"비밀번호 누락"));
 		//4. 인증 여부 판
 		if(authenticate(memId, memPass)) {
 //		- 성공 : 웰컴 페이지로 이동 - redirect
 			resp.sendRedirect(req.getContextPath() + "/"); //웰컴페이지
 		}else {
 //		- 실패 : 로그인 페이지로 이동 -forward	
-			req.setAttribute("message", "로그인실패");
-			req.getRequestDispatcher("/login/loginForm.jsp").forward(req, resp); //동일한 어플리케이션 안에서 움직이기 때문에 contextpath 필요 없음
-			//resp.sendRedirect(req.getContextPath() + "/login/loginForm.jsp");
+			session.setAttribute("message", "로그인실패");
+			//req.getRequestDispatcher("/login/loginForm.jsp").forward(req, resp); //동일한 어플리케이션 안에서 움직이기 때문에 contextpath 필요 없음
+			resp.sendRedirect(req.getContextPath() + "/login/loginForm.jsp");
 		}
-		}catch (RuntimeException e) {
-			resp.sendError(400, e.getMessage());
+		}catch (ResponseStatusException e) {
+			resp.sendError(e.getStatus(), e.getMessage());
 		}
 	}
 }

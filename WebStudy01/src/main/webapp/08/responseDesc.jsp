@@ -77,6 +77,9 @@
 			response.sendRedirect(request.getContextPath() + "/08/calendar.jsp");
 		%>
 	3. Response Body(Content Body, Message Body) : 응답 본문(content)가 기록되는 영역
+		response.getWriter().print..
+		response.getOutputStream().write..
+		
 </pre>	
 <script>
 	//refresh헤더 사용하는 2번째 방법 : setInterval 사용
