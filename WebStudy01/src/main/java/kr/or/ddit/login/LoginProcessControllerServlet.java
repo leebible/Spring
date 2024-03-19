@@ -21,7 +21,10 @@ public class LoginProcessControllerServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(); //최초의 요청이 아니라 id가 없을수 없음!
-		
+		if(session.isNew()) {
+			resp.sendError(400, "로그인을 하려면 로그인 폼이 먼저 최초의 요청으로 전송되었어야 함.");
+			return;
+		}
 		//1. body영역의 디코딩에 사용할 charset 결정. 단어가 encoding라도 실제로는 디코딩하는것!
 		req.setCharacterEncoding("UTF-8");
 		try {
@@ -36,8 +39,11 @@ public class LoginProcessControllerServlet extends HttpServlet {
 			String memPass = Optional.of(req.getParameter("memPass"))
 					.filter(id->!id.isEmpty())
 					.orElseThrow(()->new ResponseStatusException(400,"비밀번호 누락"));
-		//4. 인증 여부 판
+		//4. 인증 여부 판단
 		if(authenticate(memId, memPass)) {
+//			인증된 사용자임을 증명하는 상태정보 생성 및 유지
+			session.setAttribute("authId", memId);
+			
 //		- 성공 : 웰컴 페이지로 이동 - redirect
 			resp.sendRedirect(req.getContextPath() + "/"); //웰컴페이지
 		}else {

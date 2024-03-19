@@ -7,8 +7,8 @@
 5. body 에 new img를 추가(append)
  */
 
-//1. submit 이벤트 중단
 document.forms[0].addEventListener("submit",(event)=>{
+//1. submit 이벤트 중단
 	event.preventDefault(); 
 	let url = event.target.action
 //2.선택한 option value 확보

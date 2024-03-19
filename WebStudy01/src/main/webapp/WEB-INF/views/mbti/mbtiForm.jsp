@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -8,6 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBTI</title>
 </head>
+	<%
+			String mbtiCookieValue = (String) request.getAttribute("mbtiCookieValue");
+			if(StringUtils.isNotBlank(mbtiCookieValue)){
+				%>
+				<script>
+					document.addEventListener("DOMContentLoaded",()=>{
+						window['mbti-form'].type.value = "<%=mbtiCookieValue%>";
+						document.forms[0].requestSubmit();
+					});			
+				</script>
+				<%
+				
+			}
+		%>
 <body>
     <form id="mbti-form" method="post" enctype="application/x-www-form-urlencoded"><!-- 메소드 생략하면 Get방식, Get방식은 enctype필요없음 -->
         <select name="type" onchange="this.form.requestSubmit()"> <!-- onchange뒤는 익명함수임. submit만 쓰면 이벤트 핸들러 동작X -->

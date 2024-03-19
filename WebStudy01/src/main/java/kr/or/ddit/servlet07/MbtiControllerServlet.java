@@ -1,6 +1,9 @@
 package kr.or.ddit.servlet07;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -8,11 +11,13 @@ import java.util.Optional;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.ddit.exception.ResponseStatusException;
+import kr.or.ddit.utils.CookieMapRequestWrapper;
 
 
 //일반적으로 서블릿은 요청이들어오면 실행(?)함.
@@ -45,16 +50,22 @@ public class MbtiControllerServlet extends HttpServlet {
         
         application = getServletContext();
         application.setAttribute("mbtiMap", mbtiMap); //request는 Stateless고 ServletContext는 Statefull!
+        
+        
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String findedValue = new CookieMapRequestWrapper(req).getCookieValue("mbtiCookie");
+		req.setAttribute("mbtiCookieValue", findedValue);
 		String path = "/WEB-INF/views/mbti/mbtiForm.jsp";
 		req.getRequestDispatcher(path).forward(req,resp); 
+		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Map<String, String> mbtiMap = (Map) application.getAttribute("mbtiMap");
+		
 		//form태그안의 name속성. <select name="type"," 사용하기. 검증통과 후 html로 이동하는 코드가 나와야함(model2구조).
 		try {
 		//1. 팔요 파라미터 확보 / 검증
@@ -66,11 +77,18 @@ public class MbtiControllerServlet extends HttpServlet {
 				throw new ResponseStatusException(400,String.format("%s mbti 유형은 없음", mbtitype)); //return이 필요없고 예외가 발생하면 flow는 멈추고 catch로 jumping
 			}
 			
+			Cookie mbtiCookie = new Cookie("mbtiCookie", URLEncoder.encode(mbtitype,"UTF-8"));
+			mbtiCookie.setPath(req.getContextPath());
+			mbtiCookie.setMaxAge(60*60*24*3);
+			resp.addCookie(mbtiCookie);
+			
 //			String path = String.format("/WEB-INF/views/mbti/%s.html",mbtitype);
 			String content = String.format("/WEB-INF/views/mbti/%s.html",mbtitype);  //(모듈화 작업시 필요코드)
 			req.setAttribute("content", content); //(모듈화 작업시 필요코드)
 			String path = "/WEB-INF/views/mbti/base.jsp"; //모듈화 작업시 필요한 path
 			req.getRequestDispatcher(path).forward(req,resp);
+			
+			
 		}catch(ResponseStatusException e) {
 			resp.sendError(e.getStatus(), e.getMessage()); //이런용도로 사용하는게 custom exception임 
 		}

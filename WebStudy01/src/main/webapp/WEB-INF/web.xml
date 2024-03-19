@@ -8,6 +8,17 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<context-param>
+		<param-name>param1</param-name>
+		<param-value>value1</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>imageFolder</param-name>
+		<param-value>D:/00.medias/images</param-value>
+	</context-param>
+	
 	<servlet>
 		<servlet-name>mimeTextDesc</servlet-name>
 		<servlet-class>kr.or.ddit.servlet02.MimeTextDescServlet</servlet-class>
@@ -25,7 +36,28 @@
 		<session-timeout>2</session-timeout>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
-
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login/loginForm.jsp</form-login-page>
+			<form-error-page>/login/loginForm.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+	
+<!-- 	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>MBTI</web-resource-name>
+			<url-pattern>/09/mbti</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ROLE_ADMIN</role-name>
+		</auth-constraint>
+		HTTPS프로토콜 쓰도로 강제 
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint> -->
 	<!-- <servlet> <servlet-name>DescriptionServlet</servlet-name> <servlet-class>kr.or.ddit.sevlet01.DescriptionServlet</servlet-class> 
 		<load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> <servlet-name>DescriptionServlet</servlet-name> 
 		<url-pattern>/desc</url-pattern> </servlet-mapping> -->
