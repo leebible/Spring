@@ -7,7 +7,7 @@
 <title>06/implicitObject.jsp</title>
 </head>
 <body>
-<h4>기본객체(내장 객체)</h4>
+<h4>JSP에서 제공되는 기본객체(내장 객체)</h4>
 <pre>
 	기본 객체의 종류
 	1. request(HttpServletRequest)

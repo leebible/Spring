@@ -54,7 +54,7 @@
 	<a href="../11/cookieView.jsp">다른 경로에서 확인</a> <!-- ../하면 webapp이 아니라 context roof -->
 	
 	**쿠키 속성의 종류
-	1. name(required) : 변수(identifier) 생성 규칙에 따른 이름.
+	1. name(required) : 변수(identifier) 생성 규칙에 따른 이름. //공백X 
 	2. value(required) : 특수문자가 포함된 값은 인코딩(URLEncoding)해서 전송함.
 	--> optional
 	3. domain/host : 쿠키의 재전송 여부를 결정하는 조건.
