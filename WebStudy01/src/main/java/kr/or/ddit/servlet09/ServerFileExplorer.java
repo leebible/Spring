@@ -34,21 +34,20 @@ public class ServerFileExplorer extends HttpServlet{
 				.orElse("/");
 		/* List<File> fileList = new ArrayList<File>(); */
 		List<Map<String,Object>> fileList = new ArrayList<>();
-		Map<String,File> fileMap = new HashMap<String,File>();
+		Map<String,File> fileMap = new HashMap<>();
 		for(String path : application.getResourcePaths(base)) {
 			String realPath = application.getRealPath(path);
-			File tmp = new File(realPath);
+			File tmp = new File(realPath); //ex) 전자제품
+			
 			Map<String,Object> singleMap = new HashMap<>();
 			fileMap.put(path,tmp);
 			singleMap.put("path",path);
 			singleMap.put("file",tmp);
+			fileList.add(singleMap);
 			
 		}
 		
-		
-		
-		
-		/* req.setAttribute("fileList", fileList); */
+		req.setAttribute("fileList", fileList);
 		req.setAttribute("fileMap", fileMap);
 		String viewName = "/WEB-INF/views/explorer/fileView.jsp";
 		req.getRequestDispatcher(viewName).forward(req, resp);
