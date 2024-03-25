@@ -37,7 +37,7 @@
 </ul>
 <div data-url="<c:url value='/case2/fileInfo' />" id="right-area" class="card col-6">
 </div>
-</div>uyyyyh
+</div>
 <script src=" <c:url value='/resources/js/app/explorer/fileView_case2.js' /> "></script>
 
 <jsp:include page="/WEB-INF/includee/postScript.jsp" />

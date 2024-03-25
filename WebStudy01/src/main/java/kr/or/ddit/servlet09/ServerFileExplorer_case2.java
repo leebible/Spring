@@ -61,7 +61,6 @@ public class ServerFileExplorer_case2 extends HttpServlet{
 		String viewName = null;
 		if(accept.contains("json")) { //list객체를 json으로 마샬링 하는 작업
 			viewName = "/jsonView.do";
-		    req.getRequestDispatcher(viewName).forward(req,resp);
 		}else {
 			viewName = "/WEB-INF/views/explorer/fileView_case2.jsp";
 		}
