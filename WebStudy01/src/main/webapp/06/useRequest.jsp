@@ -1,7 +1,6 @@
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
-<%@page import="com.itextpdf.text.log.SysoCounter"%>
 <%@page import="java.util.Enumeration"%>
 <%@ page language="java" 
     pageEncoding="UTF-8"%>
