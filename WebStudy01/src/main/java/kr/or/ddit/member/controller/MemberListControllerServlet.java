@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.ddit.member.service.MemberSerivceImpl;
 import kr.or.ddit.member.service.MemberService;
+import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.vo.MemberVO;
 
 
@@ -27,7 +27,7 @@ import kr.or.ddit.vo.MemberVO;
 public class MemberListControllerServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		MemberService service = new MemberSerivceImpl();
+		MemberService service = new MemberServiceImpl();
 		List<MemberVO> mlist = service.retrieveMemberList();
 		//scope
 		req.setAttribute("mlist",mlist);

@@ -5,11 +5,10 @@ import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.or.ddit.db.ConnectionFactory;
+import kr.or.ddit.db.ConnectionFactory_HikariCP;
 import kr.or.ddit.exception.PersistenceException;
 import kr.or.ddit.vo.MemberVO;
 
@@ -61,7 +60,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" 	    ?                  ");
 		sql.append(" 	)                      ");
 		try(
-			Connection conn = ConnectionFactory.getConnection();	
+			Connection conn = ConnectionFactory_HikariCP.getConnection();	
 //			Statement stmt = conn.createStatement();	
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		){
@@ -110,7 +109,7 @@ public class MemberDAOImpl implements MemberDAO {
         sql.append("                                                ");
 		sql.append(" FROM MEMBER                                    ");
 		try(
-			Connection conn = ConnectionFactory.getConnection();	
+			Connection conn = ConnectionFactory_HikariCP.getConnection();	
 //			Statement stmt = conn.createStatement();	
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		){
@@ -151,7 +150,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" FROM MEMBER                                    ");
 		sql.append(" WHERE MEM_ID = ?                         ");
 		try(
-			Connection conn = ConnectionFactory.getConnection();	
+			Connection conn = ConnectionFactory_HikariCP.getConnection();	
 //			Statement stmt = conn.createStatement();	
 			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		){
@@ -214,7 +213,7 @@ public class MemberDAOImpl implements MemberDAO {
 				+ "MEM_DELETE= ?, "
 				+ "WHERE MEM_ID=?");
 		try(
-				Connection conn = ConnectionFactory.getConnection();	
+				Connection conn = ConnectionFactory_HikariCP.getConnection();	
 				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			){
 //				3.
@@ -251,7 +250,7 @@ public class MemberDAOImpl implements MemberDAO {
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM MEMBER WHERE MEM_ID=?");
 		try(
-				Connection conn = ConnectionFactory.getConnection();	
+				Connection conn = ConnectionFactory_HikariCP.getConnection();	
 				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 			){
 //				3.

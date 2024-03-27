@@ -13,8 +13,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body data-context-path="${pageContext.request.contextPath}">
-
+<body data-context-path="${pageContext.request.contextPath}" data-new-mem-id=${request.memId }>
+<a href="${pageContext.request.contextPath }/member/memberInsert.do">작성</a>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -114,15 +114,17 @@
 	</thead>
 	
 	<tbody>
+	
 		<c:if test="${not empty mlist }">
-			<c:forEach items="${mlist }" var="once">
-				<tr data-mem-id="${once.memId }" data-bs-toggle="modal"  data-bs-target="#exampleModal"><!-- 부트스트랩 js의 핸들러 -->
-					<td>${once.memName }</td>
-					<td>${once.memAdd1 }</td>
-					<td>${once.memAdd2 }</td>
-					<td>${once.memHp }</td>
-					<td>${once.memMail }</td>
-					<td>${once.memMileage }</td>
+			<c:forEach items="${mlist }" var="member">
+				<c:set value="${member.memId eq lastCreated.memId ?'active' : ''}" var="clzValue"/> 
+				<tr class="${clzValue }" data-mem-id="${member.memId }" data-bs-toggle="modal"  data-bs-target="#exampleModal"><!-- 부트스트랩 js의 핸들러 -->
+					<td>${member.memName }</td>
+					<td>${member.memAdd1 }</td>
+					<td>${member.memAdd2 }</td>
+					<td>${member.memHp }</td>
+					<td>${member.memMail }</td>
+					<td>${member.memMileage }</td>
 				</tr>
 			</c:forEach>
 		</c:if>
@@ -131,7 +133,7 @@
 				<td colspan="6">회원 정보가 없습니다.</td>
 			</tr>
 		</c:if>
-		
+		<c:remove var="lastCreated" scope="session"/>		
 	</tbody>
 	
 

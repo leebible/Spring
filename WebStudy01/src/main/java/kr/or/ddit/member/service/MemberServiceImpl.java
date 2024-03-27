@@ -10,7 +10,7 @@ import kr.or.ddit.servlet10.dao.PropertyDAO;
 import kr.or.ddit.servlet10.dao.PropertyDAOImpl;
 import kr.or.ddit.vo.MemberVO;
 
-public class MemberSerivceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao = new MemberDAOImpl();
 	/*
 	 * public MemberSerivceImpl() { } private static MemberSerivceImpl service;
@@ -20,7 +20,14 @@ public class MemberSerivceImpl implements MemberService {
 
 	@Override
 	public ServiceResult createMember(MemberVO member) {
-		return null;
+		ServiceResult result = null;
+		if (dao.selectMember(member.getMemId())== null) {
+			int rowcnt = dao.insertMember(member);
+			result = rowcnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+		}else {
+			result = ServiceResult.PKDUPLICATED;
+		}
+		return result;
 	}
 
 	@Override

@@ -1,6 +1,44 @@
 /**
  * JQuery 설명!!
  */
+
+
+
+
+
+
+$(document).ready(function(){
+   const $modal = $("#exampleModal").on("show.bs.modal", function(event) {
+    let modalElement = this;
+    let tr = event.relatedTarget;
+    let memId = $(tr).data("memId");
+
+    let url = `${cPath}/member/memberDetail.do`;
+    let method = "GET";
+
+    $.ajax({
+        url: url,
+        method: method,
+        dataType: "json",
+        data: {
+            who: memId
+        },
+        success: function({ member }, status, jqXHR) {
+            console.log(member?.memId);
+            $modal.find("td[id]").each(function(index, td) {
+                let propName = td.id;
+                td.innerHTML = member[propName];
+            });
+        },
+        error: function(jqXHR, status, errorText) {
+            console.log(jqXHR, status, errorText);
+        }
+    });
+}).on("hidden.bs.modal", function(event) {
+    $modal.find("td[id]").html("");
+});
+});
+
 const cPath = document.body.dataset.contextPath;
 //document.addEventListener("DOMContenLoaded")
 $(function(){ //1) $(document).on("ready", function()  2) $(document).ready(function()
@@ -58,5 +96,11 @@ $(function(){ //1) $(document).on("ready", function()  2) $(document).ready(func
 		$modal.find("td[id]").html("");
 	})
 	
-	
+//새로입력받은 회원 모달창 띄우기 javascript 만들기
+//1.tr태그중에서
+//2.data-mem-id를 갖고 있는 tr
+//3.active를 갖고있는 클래스
+
+//trigger는 강제이벤트발생 / on은 이벤트 핸들러 발생
+	$("tr[data-mem-id].active").trigger("click");
 });
