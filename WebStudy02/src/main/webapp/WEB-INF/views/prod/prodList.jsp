@@ -32,7 +32,9 @@
 				<tr>
 					<td>
 <!-- 					/prod/prodDetail.do?what=P101000001 -->
-					<a href="${pageContext.request.contextPath }/prod/prodDetail.do?what=${prod.prodId }">${prod.prodId }</a>
+					<c:url value="/prod/prodDetail.do" var="detailUrl">
+						<c:param name="what" value="${prod.prodId}" />
+					</c:url>
 					</td>
 					<td>${prod.buyer.buyerName }</td>
 					<td>${prod.lprod.lprodNm }</td>
