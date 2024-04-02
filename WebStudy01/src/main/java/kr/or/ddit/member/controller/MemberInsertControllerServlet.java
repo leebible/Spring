@@ -57,11 +57,11 @@ public class MemberInsertControllerServlet extends HttpServlet{
 			throw new RuntimeException(e);
 		} 
 		
-		for(Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String paramName = entry.getKey();
-			String paramValue = entry.getValue()[0];
-//			System.out.printf("%s : %s\n", paramName, paramValue);
-		}
+//		for(Entry<String, String[]> entry : parameterMap.entrySet()) {
+//			String paramName = entry.getKey();
+//			String paramValue = entry.getValue()[0];
+////			System.out.printf("%s : %s\n", paramName, paramValue);
+//		}
 		System.out.println(member);
 //	 * 2. 검증
 		Map<String, String> errors = new LinkedHashMap<>();//현재는 errors가 비어있지만
@@ -92,8 +92,8 @@ public class MemberInsertControllerServlet extends HttpServlet{
 		}
 //	 * 5. view 결정
 //	 * 6. view로 이동(flow control)
-		if(viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath()); //이 규칙은 나중에 Spring에서 그대로 사용됨!!!!
+		if(viewName.startsWith("redirect:")) { 
+			String location = viewName.replace("redirect:", req.getContextPath()); //prefix 이 규칙은 나중에 Spring에서 그대로 사용됨!!!!
 			resp.sendRedirect(location);
 		}else {
 			req.getRequestDispatcher(viewName).forward(req, resp);

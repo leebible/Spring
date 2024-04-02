@@ -38,10 +38,10 @@ public class ConnectionFactory_HikariCP {
 			password = props.getProperty("password");
 			
 			
-			config.setDriverClassName(driverClassName);
-			config.setJdbcUrl(url);
-			config.setUsername(user);
-			config.setPassword(password);
+			config.setDriverClassName(driverClassName.trim());
+			config.setJdbcUrl(url.trim());
+			config.setUsername(user.trim());
+			config.setPassword(password.trim());
 			//여기까지가 필수 속성
 			
 			config.setAutoCommit(true); //기본값이라 쓰진않아도 되지만 mybatis때 보기 위해 일부러 놓은 코드

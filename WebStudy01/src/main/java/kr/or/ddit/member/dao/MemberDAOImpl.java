@@ -1,15 +1,18 @@
 package kr.or.ddit.member.dao;
 
+import java.beans.PropertyDescriptor;
 import java.sql.Connection;
 import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import kr.or.ddit.db.ConnectionFactory_HikariCP;
 import kr.or.ddit.exception.PersistenceException;
+import kr.or.ddit.utils.NamingUtils;
 import kr.or.ddit.vo.MemberVO;
 
 public class MemberDAOImpl implements MemberDAO {
@@ -59,11 +62,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" 	    ?,                 ");
 		sql.append(" 	    ?                  ");
 		sql.append(" 	)                      ");
-		try(
-			Connection conn = ConnectionFactory_HikariCP.getConnection();	
+		try (Connection conn = ConnectionFactory_HikariCP.getConnection();
 //			Statement stmt = conn.createStatement();	
-			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		){
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());) {
 //			3.
 			int idx = 1;
 			pstmt.setString(idx++, member.getMemId());
@@ -83,17 +84,44 @@ public class MemberDAOImpl implements MemberDAO {
 			pstmt.setString(idx++, member.getMemLike());
 			pstmt.setString(idx++, member.getMemMemorial());
 			pstmt.setString(idx++, member.getMemMemorialday());
-			if(member.getMemMileage()==null) {
+			if (member.getMemMileage() == null) {
 				pstmt.setNull(idx++, JDBCType.NUMERIC.ordinal());
-			}else {
+			} else {
 				pstmt.setLong(idx++, member.getMemMileage());
 			}
 			pstmt.setString(idx++, member.getMemDelete());
-			
+
 			int rowcnt = pstmt.executeUpdate();
 			return rowcnt;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new PersistenceException(e);
+		}
+	}
+
+	private <T> T resultSetToObject(ResultSet rs, Class<T> resultType) throws SQLException { // <T> 타입변수, 호출될때 런타임이
+																								// 결정됨.(제네릭)
+		try {
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int count = rsmd.getColumnCount();
+			T result = resultType.newInstance(); // new MemberVO();
+			for (int i = 1; i <= count; i++) {
+				rsmd.getColumnName(i);
+				String snake = rsmd.getColumnName(i);
+				String propName = NamingUtils.snakeToCamel(snake);
+				PropertyDescriptor pd = new PropertyDescriptor(propName, resultType);
+				Object value = null;
+				if (pd.getPropertyType().equals(String.class)) {
+					; // 전역변수의 타입을 갖고있음(String or long)
+					value = rs.getString(snake);
+				} else {
+					value = rs.getLong(snake);
+				}
+				pd.getWriteMethod().invoke(result, value); // member.setMemId(rs.getString("MEM_ID) // invoke를 하려면 먼저
+															// 객체가 있어야함
+			}
+			return result;
+		} catch (Exception e) {
+			throw new SQLException(e);
 		}
 	}
 
@@ -106,31 +134,29 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" ,  MEM_HP              ");
 		sql.append(" , MEM_MAIL                ");
 		sql.append(" , MEM_MILEAGE   ");
-        sql.append("                                                ");
+		sql.append("                                                ");
 		sql.append(" FROM MEMBER                                    ");
-		try(
-			Connection conn = ConnectionFactory_HikariCP.getConnection();	
+		try (Connection conn = ConnectionFactory_HikariCP.getConnection();
 //			Statement stmt = conn.createStatement();	
-			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		){
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());) {
 //			3
 			ResultSet rs = pstmt.executeQuery();
 //			5
 			List<MemberVO> memberList = new ArrayList<>();
-			while(rs.next()) {
-				MemberVO member = new MemberVO();
+			while (rs.next()) {
+				MemberVO member = resultSetToObject(rs, MemberVO.class);
 				memberList.add(member);
-				member.setMemId(rs.getString("MEM_ID"));
-				member.setMemName(rs.getString("MEM_NAME"));
-				member.setMemAdd1(rs.getString("MEM_ADD1"));
-				member.setMemAdd2(rs.getString("MEM_ADD2"));
-				member.setMemHp(rs.getString("MEM_HP"));
-				member.setMemMail(rs.getString("MEM_MAIL"));
-				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
+//				member.setMemId(rs.getString("MEM_ID"));
+//				member.setMemName(rs.getString("MEM_NAME"));
+//				member.setMemAdd1(rs.getString("MEM_ADD1"));
+//				member.setMemAdd2(rs.getString("MEM_ADD2"));
+//				member.setMemHp(rs.getString("MEM_HP"));
+//				member.setMemMail(rs.getString("MEM_MAIL"));
+//				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
 			}
 			rs.close();
 			return memberList;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new PersistenceException(e);
 		}
 	}
@@ -146,44 +172,42 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" , MEM_MAIL, MEM_JOB, MEM_LIKE                  ");
 		sql.append(" , MEM_MEMORIAL, TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY, MEM_MILEAGE   ");
 		sql.append(" , MEM_DELETE                                   ");
-        sql.append("                                                ");
+		sql.append("                                                ");
 		sql.append(" FROM MEMBER                                    ");
 		sql.append(" WHERE MEM_ID = ?                         ");
-		try(
-			Connection conn = ConnectionFactory_HikariCP.getConnection();	
+		try (Connection conn = ConnectionFactory_HikariCP.getConnection();
 //			Statement stmt = conn.createStatement();	
-			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		){
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());) {
 //			3
 			pstmt.setString(1, memId);
 			ResultSet rs = pstmt.executeQuery();
 //			5
 			MemberVO member = null;
-			if(rs.next()) {
-				member = new MemberVO();
-				member.setMemId(rs.getString("MEM_ID"));
-				member.setMemPass(rs.getString("MEM_PASS"));
-				member.setMemName(rs.getString("MEM_NAME"));
-				member.setMemRegno1(rs.getString("MEM_REGNO1"));
-				member.setMemRegno2(rs.getString("MEM_REGNO2"));
-				member.setMemBir(rs.getString("MEM_BIR"));
-				member.setMemZip(rs.getString("MEM_ZIP"));
-				member.setMemAdd1(rs.getString("MEM_ADD1"));
-				member.setMemAdd2(rs.getString("MEM_ADD2"));
-				member.setMemHometel(rs.getString("MEM_HOMETEL"));
-				member.setMemComtel(rs.getString("MEM_COMTEL"));
-				member.setMemHp(rs.getString("MEM_HP"));
-				member.setMemMail(rs.getString("MEM_MAIL"));
-				member.setMemJob(rs.getString("MEM_JOB"));
-				member.setMemLike(rs.getString("MEM_LIKE"));
-				member.setMemMemorial(rs.getString("MEM_MEMORIAL"));
-				member.setMemMemorialday(rs.getString("MEM_MEMORIALDAY"));
-				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
-				member.setMemDelete(rs.getString("MEM_DELETE"));
+			if (rs.next()) {
+				member = resultSetToObject(rs, MemberVO.class);
+//				member.setMemId(rs.getString("MEM_ID"));
+//				member.setMemPass(rs.getString("MEM_PASS"));
+//				member.setMemName(rs.getString("MEM_NAME"));
+//				member.setMemRegno1(rs.getString("MEM_REGNO1"));
+//				member.setMemRegno2(rs.getString("MEM_REGNO2"));
+//				member.setMemBir(rs.getString("MEM_BIR"));
+//				member.setMemZip(rs.getString("MEM_ZIP"));
+//				member.setMemAdd1(rs.getString("MEM_ADD1"));
+//				member.setMemAdd2(rs.getString("MEM_ADD2"));
+//				member.setMemHometel(rs.getString("MEM_HOMETEL"));
+//				member.setMemComtel(rs.getString("MEM_COMTEL"));
+//				member.setMemHp(rs.getString("MEM_HP"));
+//				member.setMemMail(rs.getString("MEM_MAIL"));
+//				member.setMemJob(rs.getString("MEM_JOB"));
+//				member.setMemLike(rs.getString("MEM_LIKE"));
+//				member.setMemMemorial(rs.getString("MEM_MEMORIAL"));
+//				member.setMemMemorialday(rs.getString("MEM_MEMORIALDAY"));
+//				member.setMemMileage(rs.getLong("MEM_MILEAGE"));
+//				member.setMemDelete(rs.getString("MEM_DELETE"));
 			}
 			rs.close();
 			return member;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new PersistenceException(e);
 		}
 	}
@@ -191,94 +215,56 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int update(MemberVO member) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("update MEMBER "
-				+ "set "
-				+ "MEM_PASS= ?,\r\n"
-				+ "MEM_NAME= ?,\r\n"
-				+ "MEM_REGNO1= ?,\r\n"
-				+ "MEM_REGNO2= ?,\r\n"
-				+ "MEM_BIR= ?,\r\n"
-				+ "MEM_ZIP= ?,\r\n"
-				+ "MEM_ADD1= ?,\r\n"
-				+ "MEM_ADD2= ?,\r\n"
-				+ "MEM_HOMETEL= ?,\r\n"
-				+ "MEM_COMTEL= ?,\r\n"
-				+ "MEM_HP= ?,\r\n"
-				+ "MEM_MAIL= ?,\r\n"
-				+ "MEM_JOB= ?,\r\n"
-				+ "MEM_LIKE= ?,\r\n"
-				+ "MEM_MEMORIAL= ?,\r\n"
-				+ "MEM_MEMORIALDAY= ?,\r\n"
-				+ "MEM_MILEAGE= ?,\r\n"
-				+ "MEM_DELETE= ?, "
-				+ "WHERE MEM_ID=?");
-		try(
-				Connection conn = ConnectionFactory_HikariCP.getConnection();	
-				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-			){
+		sql.append("update MEMBER " + "set " + "MEM_PASS= ?,\r\n" + "MEM_NAME= ?,\r\n" + "MEM_REGNO1= ?,\r\n"
+				+ "MEM_REGNO2= ?,\r\n" + "MEM_BIR= ?,\r\n" + "MEM_ZIP= ?,\r\n" + "MEM_ADD1= ?,\r\n" + "MEM_ADD2= ?,\r\n"
+				+ "MEM_HOMETEL= ?,\r\n" + "MEM_COMTEL= ?,\r\n" + "MEM_HP= ?,\r\n" + "MEM_MAIL= ?,\r\n"
+				+ "MEM_JOB= ?,\r\n" + "MEM_LIKE= ?,\r\n" + "MEM_MEMORIAL= ?,\r\n" + "MEM_MEMORIALDAY= ?,\r\n"
+				+ "MEM_MILEAGE= ?,\r\n" + "MEM_DELETE= ?, " + "WHERE MEM_ID=?");
+		try (Connection conn = ConnectionFactory_HikariCP.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());) {
 //				3.
-				int idx = 1;
-				pstmt.setString(idx++, member.getMemPass());
-				pstmt.setString(idx++, member.getMemName());
-				pstmt.setString(idx++, member.getMemRegno1());
-				pstmt.setString(idx++, member.getMemRegno2());
-				pstmt.setString(idx++, member.getMemBir());
-				pstmt.setString(idx++, member.getMemZip());
-				pstmt.setString(idx++, member.getMemAdd1());
-				pstmt.setString(idx++, member.getMemAdd2());
-				pstmt.setString(idx++, member.getMemHometel());
-				pstmt.setString(idx++, member.getMemComtel());
-				pstmt.setString(idx++, member.getMemHp());
-				pstmt.setString(idx++, member.getMemMail());
-				pstmt.setString(idx++, member.getMemJob());
-				pstmt.setString(idx++, member.getMemLike());
-				pstmt.setString(idx++, member.getMemMemorial());
-				pstmt.setString(idx++, member.getMemMemorialday());
-				pstmt.setLong(idx++, member.getMemMileage());
-				pstmt.setString(idx++, member.getMemDelete());
-				pstmt.setString(idx++, member.getMemId());
-				
-				int rowcnt = pstmt.executeUpdate();
-				return rowcnt;
-			}catch (SQLException e) {
-				throw new PersistenceException(e);
-			}
+			int idx = 1;
+			pstmt.setString(idx++, member.getMemPass());
+			pstmt.setString(idx++, member.getMemName());
+			pstmt.setString(idx++, member.getMemRegno1());
+			pstmt.setString(idx++, member.getMemRegno2());
+			pstmt.setString(idx++, member.getMemBir());
+			pstmt.setString(idx++, member.getMemZip());
+			pstmt.setString(idx++, member.getMemAdd1());
+			pstmt.setString(idx++, member.getMemAdd2());
+			pstmt.setString(idx++, member.getMemHometel());
+			pstmt.setString(idx++, member.getMemComtel());
+			pstmt.setString(idx++, member.getMemHp());
+			pstmt.setString(idx++, member.getMemMail());
+			pstmt.setString(idx++, member.getMemJob());
+			pstmt.setString(idx++, member.getMemLike());
+			pstmt.setString(idx++, member.getMemMemorial());
+			pstmt.setString(idx++, member.getMemMemorialday());
+			pstmt.setLong(idx++, member.getMemMileage());
+			pstmt.setString(idx++, member.getMemDelete());
+			pstmt.setString(idx++, member.getMemId());
+
+			int rowcnt = pstmt.executeUpdate();
+			return rowcnt;
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
 		}
+	}
 
 	@Override
 	public int delete(String memId) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM MEMBER WHERE MEM_ID=?");
-		try(
-				Connection conn = ConnectionFactory_HikariCP.getConnection();	
-				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-			){
+		try (Connection conn = ConnectionFactory_HikariCP.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());) {
 //				3.
-				pstmt.setString(1, memId);
-				
-				int rowcnt = pstmt.executeUpdate();
-				return rowcnt;
-			}catch (SQLException e) {
-				throw new PersistenceException(e);
-			}
+			pstmt.setString(1, memId);
+
+			int rowcnt = pstmt.executeUpdate();
+			return rowcnt;
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
