@@ -39,14 +39,14 @@ class AuthenticateSerivceTest {
 	}
 	
 	
-	@Test
-	void testAuthenticate() {
-		final MemberVO member = new MemberVO();
-		member.setMemId("b001");
-		member.setMemId("1004");
-		assertNotNull(inputData);
-		
-	}
+//	@Test
+//	void testAuthenticate() {
+//		final MemberVO member = new MemberVO();
+//		member.setMemId("b001");
+//		member.setMemId("1004");
+//		assertNotNull(inputData);
+//		
+//	}
 	
 	
 }

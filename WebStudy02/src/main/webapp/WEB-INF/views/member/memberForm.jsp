@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
 	<script>
 		alert("${message}");
 	</script>
-	<c:remove var="message" scope="session"/>
+	<c:remove var="message" scope="session" />
 </c:if>
 </head>
 <body>
@@ -19,9 +19,8 @@
 		<table class="table table-bordered">
 			<tr>
 				<th>회원번호</th>
-				<td><input type="text" name="memId" 
-					value="${member.memId}" class="form-control" /><span
-					class="text-danger">${errors.memId}</span></td>
+				<td><input type="text" name="memId" value="${member.memId}"
+					class="form-control" /><span class="text-danger">${errors.memId}</span></td>
 			</tr>
 			<tr>
 				<th>암호</th>
@@ -30,9 +29,8 @@
 			</tr>
 			<tr>
 				<th>회원명</th>
-				<td><input type="text" name="memName" 
-					value="${member.memName}" class="form-control" /><span
-					class="text-danger">${errors.memName}</span></td>
+				<td><input type="text" name="memName" value="${member.memName}"
+					class="form-control" /><span class="text-danger">${errors.memName}</span></td>
 			</tr>
 			<tr>
 				<th>앞자리 주민번호</th>
@@ -53,21 +51,18 @@
 			</tr>
 			<tr>
 				<th>우편번호</th>
-				<td><input type="text" name="memZip" 
-					value="${member.memZip}" class="form-control" /><span
-					class="text-danger">${errors.memZip}</span></td>
+				<td><input type="text" name="memZip" value="${member.memZip}"
+					class="form-control" /><span class="text-danger">${errors.memZip}</span></td>
 			</tr>
 			<tr>
 				<th>기본주소</th>
-				<td><input type="text" name="memAdd1" 
-					value="${member.memAdd1}" class="form-control" /><span
-					class="text-danger">${errors.memAdd1}</span></td>
+				<td><input type="text" name="memAdd1" value="${member.memAdd1}"
+					class="form-control" /><span class="text-danger">${errors.memAdd1}</span></td>
 			</tr>
 			<tr>
 				<th>상세주소</th>
-				<td><input type="text" name="memAdd2" 
-					value="${member.memAdd2}" class="form-control" /><span
-					class="text-danger">${errors.memAdd2}</span></td>
+				<td><input type="text" name="memAdd2" value="${member.memAdd2}"
+					class="form-control" /><span class="text-danger">${errors.memAdd2}</span></td>
 			</tr>
 			<tr>
 				<th></th>
@@ -88,9 +83,8 @@
 			</tr>
 			<tr>
 				<th>메일주소</th>
-				<td><input type="text" name="memMail" 
-					value="${member.memMail}" class="form-control" /><span
-					class="text-danger">${errors.memMail}</span></td>
+				<td><input type="text" name="memMail" value="${member.memMail}"
+					class="form-control" /><span class="text-danger">${errors.memMail}</span></td>
 			</tr>
 			<tr>
 				<th>직업</th>
@@ -126,6 +120,7 @@
 					value="${member.memDelete}" class="form-control" /><span
 					class="text-danger">${errors.memDelete}</span></td>
 			</tr>
+			
 			<tr>
 				<td colspan="2">
 					<button type="submit">저장</button>

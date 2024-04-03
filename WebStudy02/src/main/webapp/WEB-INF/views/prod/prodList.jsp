@@ -35,6 +35,7 @@
 					<c:url value="/prod/prodDetail.do" var="detailUrl">
 						<c:param name="what" value="${prod.prodId}" />
 					</c:url>
+					<a href="${detailUrl }">${prod.prodName }</a>
 					</td>
 					<td>${prod.buyer.buyerName }</td>
 					<td>${prod.lprod.lprodNm }</td>

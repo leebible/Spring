@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.member.dao.MemberDAO">
 
+	<resultMap type="MemberVO" id="memMap" autoMapping="true">
+		<id property="memId" column="MEM_ID"/>
+		<collection property="cartList" ofType="CartVO" autoMapping="true">
+			<association property="prod" javaType="ProdVO" autoMapping="true"/>
+		</collection>
+	</resultMap>
+
+
 	<select id="selectMemberList" resultType="MemberVO">
 		SELECT
 		MEM_ID, MEM_NAME
@@ -14,18 +22,23 @@
           
 	</select>
 	
-	<select id="selectMember" resultType="MemberVO" parameterType="string">
-		   SELECT                                      
-      MEM_ID, MEM_PASS, MEM_NAME                  
-      , MEM_REGNO1, MEM_REGNO2, TO_CHAR(MEM_BIR, 'YYYY-MM-DD') MEM_BIR          
-      , MEM_ZIP, MEM_ADD1, MEM_ADD2              
-      , MEM_HOMETEL, MEM_COMTEL, MEM_HP          
-      , MEM_MAIL, MEM_JOB, MEM_LIKE              
-      , MEM_MEMORIAL, TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY, MEM_MILEAGE
-      , MEM_DELETE                                
-      FROM MEMBER                                 
-      WHERE MEM_ID = #{memId}    
-      AND MEM_DELETE IS NULL     
+	<select id="selectMember" resultMap="memMap" parameterType="string">
+		WITH CARTPROD AS (
+			SELECT CART_NO, TO_DATE(SUBSTR(CART_NO,1,8),'YYYYMMDD') CART_DATE, CART_PROD, CART_MEMBER, CART_QTY, PROD.*
+			FROM CART INNER JOIN PROD ON (CART_PROD = PROD_ID)
+		)
+		SELECT
+			MEM_ID, MEM_PASS, MEM_NAME
+			, MEM_REGNO1, MEM_REGNO2, TO_CHAR(MEM_BIR, 'YYYY-MM-DD') MEM_BIR
+			, MEM_ZIP, MEM_ADD1, MEM_ADD2
+			, MEM_HOMETEL, MEM_COMTEL, MEM_HP
+			, MEM_MAIL, MEM_JOB, MEM_LIKE
+			, MEM_MEMORIAL, TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY,
+			MEM_MILEAGE
+			, MEM_DELETE
+			, PROD_NAME, CART_QTY, CART_NO, CART_PROD, CART_DATE
+		FROM MEMBER LEFT OUTER JOIN CARTPROD ON (MEM_ID = CART_MEMBER)
+		WHERE MEM_ID = #{memId}    
 	</select>
 	
 	   <insert id="insertMember" parameterType="MemberVO" >

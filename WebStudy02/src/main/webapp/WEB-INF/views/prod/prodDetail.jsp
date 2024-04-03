@@ -39,6 +39,7 @@
 			</table>
 		</td>
 	</tr>
+	
 		<tr>
 			<th>상품코드</th>
 			<td>${prod.prodId}</td>
@@ -119,6 +120,37 @@
 			<th>마일리지</th>
 			<td>${prod.prodMileage}</td>
 		</tr>
+		
+		<tr>
+		<th>구매자 정보</th>
+		<td>
+			<table class="table table-bordered table-striped">
+				<thead class="table-dark">
+					<tr>
+						<th> 구매자명 </th>
+						<th> 이메일주소 </th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:if test="${not empty prod.cartList }">
+					<c:forEach items="${prod.cartList }" var="cart">
+						<tr>
+							<c:set value="${cart.member }" var="member" />
+							<td> ${member.memName} </td>
+							<td> ${member.memMail} </td>
+						</tr>
+					</c:forEach>
+				</c:if>
+				<c:if test="${empty prod.cartList }">
+						<tr>
+							<td colspan="2">구매자가 없습니다.</td>
+						</tr>
+				</c:if>
+				</tbody>
+			</table>
+		</td>
+	</tr>
+	
 	</table>
 <script src="${pageContext.request.contextPath}/resources/js/member/memberList.js"></script>
 <jsp:include page="/WEB-INF/includee/postScript.jsp"/>

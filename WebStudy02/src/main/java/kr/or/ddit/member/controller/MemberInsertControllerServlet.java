@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
@@ -30,6 +32,7 @@ import kr.or.ddit.vo.MemberVO;
  */
 @WebServlet("/member/memberInsert.do")
 public class MemberInsertControllerServlet extends HttpServlet{
+	
 	private MemberService service = new MemberServiceImpl();//의존관계
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,7 +52,6 @@ public class MemberInsertControllerServlet extends HttpServlet{
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		} 
-		
 //		for(Entry<String, String[]> entry : parameterMap.entrySet()) {
 //			String paramName = entry.getKey();
 //			String paramValue = entry.getValue()[0];

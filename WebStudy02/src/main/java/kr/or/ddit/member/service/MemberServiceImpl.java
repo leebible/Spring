@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.naming.AuthenticationException;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.exception.PkNotFoundException;
 import kr.or.ddit.login.AuthenticateException;
@@ -17,16 +20,27 @@ import kr.or.ddit.vo.MemberVO;
 public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao = new MemberDAOImpl();
 	private AuthenticateSerivce authService = new AuthenticateSerivceImpl();
+	
+	private void encryptMember(MemberVO member) { //call by reference 방식
+		String plain = member.getMemPass();
+		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String encoded = encoder.encode(plain);
+		member.setMemPass(encoded);
+	}
 	/*
 	 * public MemberSerivceImpl() { } private static MemberSerivceImpl service;
 	 * public static MemberSerivceImpl getInstance() { if (service == null) {
 	 * service = new MemberSerivceImpl(); // 오직 1개의 객체만 생성 } return service; }
 	 */
-
+	
+	
+	
+	
 	@Override
 	public ServiceResult createMember(MemberVO member) {
 		ServiceResult result = null;
 		if (dao.selectMember(member.getMemId())== null) {
+			encryptMember(member);
 			int rowcnt = dao.insertMember(member);
 			result = rowcnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
 		}else {

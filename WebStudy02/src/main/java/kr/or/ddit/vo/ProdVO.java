@@ -2,6 +2,8 @@ package kr.or.ddit.vo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,24 +17,27 @@ public class ProdVO implements Serializable{
 	private String prodName;
 	private String prodLgu;
 	private String prodBuyer;
-	private long prodCost;
-	private long prodPrice;
-	private long prodSale;
+	private Long prodCost;
+	private Long prodPrice;
+	private Long prodSale;
 	private String prodOutline;
 	@Exclude
 	private String prodDetail;
 	private String prodImg;
-	private long prodTotalstock;
+	private Long prodTotalstock;
 	private LocalDate prodInsdate;
-	private long prodProperstock;
+	private Long prodProperstock;
 	private String prodSize;
 	private String prodColor;
 	private String prodDelivery;
 	private String prodUnit;
-	private long prodQtyin;
-	private long prodQtysale;
-	private long prodMileage;
+	private Long prodQtyin;
+	private Long prodQtysale;
+	private Long prodMileage;
 	
 	private BuyerVO buyer; // Has a 관계(1:1), PROD(1) : BUYER(1) --> ProdVO has a BuyerVO
 	private LprodVO lprod; // Has a 관계(1:1), PROD(1) : LPROD(1) --> ProdVO has a LprodVO
+	private List<CartVO> cartList; // Has Many
+	
+	
 }
