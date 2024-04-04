@@ -26,7 +26,7 @@ public class ProdServiceImpl implements ProdService {
 	@Override
 	public ServiceResult createProd(ProdVO prod) {
 		ServiceResult result = null;
-		if(dao.insertProd(prod) > 1) result=ServiceResult.OK;
+		if(dao.insertProd(prod) > 0) result=ServiceResult.OK;
 		else {
 			result=ServiceResult.FAIL;
 		}

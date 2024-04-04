@@ -1,3 +1,4 @@
+
 package kr.or.ddit.prod.controller;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.prod.dao.ProdDAO;
 import kr.or.ddit.prod.dao.ProdDAOImpl;
 import kr.or.ddit.prod.service.ProdService;
@@ -30,17 +32,9 @@ public class ProdDetailControllerServlet extends HttpServlet{
 		ProdVO prod = service.retrieveProd(prodId);
 		req.setAttribute("prod", prod);
 		
-		String viewName = "/WEB-INF/views/prod/prodDetail.jsp";
-		if (viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath()); // prefix 이 규칙은 나중에 Spring에서 그대로
-																					// 사용됨!!!!
-			resp.sendRedirect(location);
-		}else if(viewName.startsWith("forward:")) {
-			String path = viewName.substring("forward:".length());
-			req.getRequestDispatcher(path).forward(req, resp);
-		}else {
-			req.getRequestDispatcher(viewName).forward(req, resp);
-		}
+		String viewName = "prod/prodDetail"; 
+		new ViewResolverComposite().resolveView(viewName, req, resp);
+		
 		
 		
 	}

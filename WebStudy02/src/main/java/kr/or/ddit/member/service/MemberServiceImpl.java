@@ -19,6 +19,7 @@ import kr.or.ddit.vo.MemberVO;
 
 public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao = new MemberDAOImpl();
+	
 	private AuthenticateSerivce authService = new AuthenticateSerivceImpl();
 	
 	private void encryptMember(MemberVO member) { //call by reference 방식
