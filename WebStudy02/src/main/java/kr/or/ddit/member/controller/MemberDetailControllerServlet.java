@@ -1,6 +1,7 @@
 package kr.or.ddit.member.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,23 +16,45 @@ import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 
+/**
+ * C : /member/memberInsert.do(GET, POST)
+ * R (GET)
+ * 단건 : /member/memberDetail.do?who=a001
+ * 다건 : /member/memberList.do
+ * U : /member/memberUpdate.do(GET, POST)
+ * D : /member/memberDelete.do(POST)
+ *
+ */
 @WebServlet("/member/memberDetail.do")
 public class MemberDetailControllerServlet extends HttpServlet{
+	private MemberService service = new MemberServiceImpl();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		MemberService service = new MemberServiceImpl();
 		String memId = req.getParameter("who");
 		if(StringUtils.isBlank(memId)) {
 			resp.sendError(400);
 			return;
 		}
-		MemberVO member = service.retrieveMember(memId); //모델 받아옴
-		//scope
+		MemberVO member = service.retrieveMember(memId);
 		req.setAttribute("member", member);
-		//view
 		String viewName = "/jsonView.do";
-		//flow control
 		new ViewResolverComposite().resolveView(viewName, req, resp);
-		
-	}
+	} 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

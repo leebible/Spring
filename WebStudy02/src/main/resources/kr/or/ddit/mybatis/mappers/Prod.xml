@@ -131,8 +131,30 @@
 				, #{prodMileage, jdbcType=NUMERIC}
 			)
 	</insert>
-
-
+	   <update id="updateProd" parameterType="ProdVO">
+	      UPDATE PROD SET
+	          PROD_NAME = #{prodName}
+	          , PROD_LGU = #{prodLgu}
+	          , PROD_BUYER = #{prodBuyer}
+	          , PROD_COST = #{prodCost}
+	          , PROD_PRICE = #{prodPrice}
+	          , PROD_SALE = #{prodSale}
+	          , PROD_OUTLINE = #{prodOutline}
+	          , PROD_DETAIL = #{prodDetail}
+	          , PROD_IMG = #{prodImg}   
+	          , PROD_TOTALSTOCK = #{prodTotalstock}
+	          , PROD_INSDATE = #{prodInsdate}
+	          , PROD_PROPERSTOCK = #{prodProperstock}
+	          , PROD_SIZE = #{prodSize}
+	          , PROD_COLOR = #{prodColor}
+	          , PROD_DELIVERY = #{prodDelivery}
+	          , PROD_UNIT = #{prodUnit}
+	          , PROD_QTYIN = #{prodQtyin}
+	          , PROD_QTYSALE = #{prodQtysale}
+	          , PROD_MILEAGE = #{prodMileage}
+	      WHERE PROD_ID = #{prodId}       
+	</update>
+	
 
 </mapper>
 

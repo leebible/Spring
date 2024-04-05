@@ -36,7 +36,11 @@ public class ProdServiceImpl implements ProdService {
 
 	@Override
 	public ServiceResult modifyProd(ProdVO prod) {
-		// TODO Auto-generated method stub
-		return null;
+		ServiceResult result = null;
+		if(dao.updateProd(prod) > 0) result=ServiceResult.OK;
+		else {
+			result=ServiceResult.FAIL;
+		}
+		return result;
 	}
 }

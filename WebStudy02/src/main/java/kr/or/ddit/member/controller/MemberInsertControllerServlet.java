@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.utils.PopulateUtils;
 import kr.or.ddit.utils.ValidateUtils;
 import kr.or.ddit.validate.groups.InsertGroup;
@@ -40,8 +41,8 @@ public class MemberInsertControllerServlet extends HttpServlet{
 	private MemberService service = new MemberServiceImpl();//의존관계
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String viewName="/WEB-INF/views/member/memberForm.jsp";
-		req.getRequestDispatcher(viewName).forward(req,resp);
+		String viewName="member/memberForm";
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 	
 	@Override
@@ -79,11 +80,11 @@ public class MemberInsertControllerServlet extends HttpServlet{
 			switch (result) {
 			case PKDUPLICATED:
 				req.setAttribute("message", "아이디 중복! 새로운 아이디를 입력하세요");
-				viewName="/WEB-INF/views/member/memberForm.jsp";
+				viewName="member/memberForm";
 				break;
 			case FAIL:
 				req.setAttribute("message", "서버 오류! 잠시 뒤 다시 가입하세요");
-				viewName="/WEB-INF/views/member/memberForm.jsp";
+				viewName="member/memberForm";
 				break;
 			default: //성공했으면 커멘드 오브젝트는 필요가 없어짐. request를 없애고 가기. PRG패턴이 필요함
 //				req.getSession().setAttribute("lastCreated",member);
@@ -94,16 +95,11 @@ public class MemberInsertControllerServlet extends HttpServlet{
 //	 * 4. scope를 이용해 model 공유
 			
 		}else {
-			viewName="/WEB-INF/views/member/memberForm.jsp";
+			viewName="member/memberForm";
 		}
 //	 * 5. view 결정
 //	 * 6. view로 이동(flow control)
-		if(viewName.startsWith("redirect:")) { 
-			String location = viewName.replace("redirect:", req.getContextPath()); //prefix 이 규칙은 나중에 Spring에서 그대로 사용됨!!!!
-			resp.sendRedirect(location);
-		}else {
-			req.getRequestDispatcher(viewName).forward(req, resp);
-		}
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 
 }

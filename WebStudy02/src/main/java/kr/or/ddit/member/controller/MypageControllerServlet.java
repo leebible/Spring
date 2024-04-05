@@ -11,7 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.MemberVOWrapper;
 
 @WebServlet("/mypage")
 public class MypageControllerServlet extends HttpServlet {
@@ -19,26 +21,12 @@ public class MypageControllerServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		if(session.isNew()) { //최초의 요청이 아니기때문에 잘못된 요청
-			resp.sendError(400);
-			return;
-		}
-		MemberVO authMember = (MemberVO) session.getAttribute("authMember");
 		String viewName = null;
-		if(authMember==null) { //redirect로 보내는 이유 : 잘못된 요청을 가지고 다시 돌아갈수 없으니까
-			viewName = "redirect:/login/loginForm.jsp";
-		}else {
-			MemberVO member = service.retrieveMember(authMember.getMemId());
-			req.setAttribute("member", member);
-			viewName = "/WEB-INF/views/member/mypage.jsp";
-		}
+		MemberVOWrapper principal = (MemberVOWrapper) req.getUserPrincipal();
+		MemberVO member = service.retrieveMember(principal.getName());
+		req.setAttribute("member", member);
+		viewName = "member/mypage";
 
-		if (viewName.startsWith("redirect:")) {
-			String location = viewName.replace("redirect:", req.getContextPath());
-			resp.sendRedirect(location);
-		} else {
-			req.getRequestDispatcher(viewName).forward(req, resp);
-		}
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 }

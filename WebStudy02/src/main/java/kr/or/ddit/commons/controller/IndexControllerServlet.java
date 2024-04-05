@@ -16,19 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
+
 @WebServlet("/index.do")
 public class IndexControllerServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String viewName = "/WEB-INF/views/index.jsp";
-		
-//		 * 6. view로 이동(flow control)
-		if(viewName.startsWith("redirect:")) { 
-			String location = viewName.replace("redirect:", req.getContextPath()); //prefix 이 규칙은 나중에 Spring에서 그대로 사용됨!!!!
-			resp.sendRedirect(location);
-		}else {
-			req.getRequestDispatcher(viewName).forward(req, resp);
-		}
+		String viewName = "index";
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 			
 	}
 }

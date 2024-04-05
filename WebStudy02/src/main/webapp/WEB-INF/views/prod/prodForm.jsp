@@ -1,23 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<jsp:include page="/WEB-INF/includee/preScript.jsp" />
+
 <c:if test="${not empty message }">
 	<script>
 		alert("${message}");
 	</script>
 	<c:remove var="message" scope="session" />
 </c:if>
-
-</head>
 <body>
 	<form method="post" enctype="application/x-www-form-urlencoded">
 		<table class="table table-bordered">
+			<tr>
+				<th>상품코드</th>
+				<td><input type="hidden" name="prodId" value="${prod.prodId}"
+					class="form-control" /><span class="text-danger">${errors.prodId}</span></td>
+			</tr>
 			<tr>
 				<th>상품명</th>
 				<td><input type="text" name="prodName" value="${prod.prodName}"
@@ -147,7 +145,4 @@
 			</tr>
 		</table>
 	</form>
-	<jsp:include page="/WEB-INF/includee/postScript.jsp" />
 	<script src="${pageContext.request.contextPath }/resources/js/app/prod/prodForm.js"></script>
-</body>
-</html>

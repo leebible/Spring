@@ -41,7 +41,6 @@ public class ProdInsertControllerServlet extends HttpServlet{
 		advice.addBuyerList(req);
 		
 		String viewName="prod/prodForm";
-		
 		new ViewResolverComposite().resolveView(viewName, req, resp);
 	
 	}

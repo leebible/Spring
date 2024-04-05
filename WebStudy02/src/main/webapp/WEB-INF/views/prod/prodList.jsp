@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:include page="/WEB-INF/includee/preScript.jsp"/>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <!-- SSR방식 -->
 <!-- View : BootStrap, Jquery -->
 <table class="table table-bordered table-striped"> <!-- 부트스트랩 적용 -->
@@ -58,7 +50,3 @@
 
 
 </table>
-<script src="${pageContext.request.contextPath}/resources/js/member/memberList.js"></script>
-<jsp:include page="/WEB-INF/includee/postScript.jsp"/>
-</body>
-</html>

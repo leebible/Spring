@@ -31,24 +31,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @WebServlet("/member/memberList.do")
 public class MemberListControllerServlet extends HttpServlet {
-//	private static final Logger logger = LoggerFactory.getLogger(MemberListControllerServlet.class); //굉장히 흔한 코드. (중복 가능성)
+//	private static final Logger logger = LoggerFactory.getLogger(MemberListControllerServlet.class);
 //	private static final Logger logger2 = LoggerFactory.getLogger("jdbc.resultsettable");
+	private MemberService service = new MemberServiceImpl();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		log.info("컨트롤러 동작");
-//		System.out.println("컨트롤러 동작");
-		MemberService service = new MemberServiceImpl();
-		List<MemberVO> mlist = service.retrieveMemberList();
-//		System.out.printf("%s\n", mlist);
-		log.info("조회된 모델: {}", mlist); //{} : 메세지 argument
-		//scope
-		req.setAttribute("mlist",mlist);
-		//view
-		String accept = req.getHeader("accept");
-		String viewName="member/memberList";
-	
+		List<MemberVO> memberList = service.retrieveMemberList();
+//		System.out.printf("%s\n", memberList);
+		log.info("조회된 모델 : {}", memberList);
+		// scope
+		req.setAttribute("memberList", memberList);
+		// view
+		String viewName = "member/memberList";
+		// flow control
 		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
-	
-
 }

@@ -35,7 +35,7 @@
 			, MEM_MAIL, MEM_JOB, MEM_LIKE
 			, MEM_MEMORIAL, TO_CHAR(MEM_MEMORIALDAY, 'YYYY-MM-DD') MEM_MEMORIALDAY,
 			MEM_MILEAGE
-			, MEM_DELETE
+			, MEM_DELETE, MEM_ROLE
 			, PROD_NAME, CART_QTY, CART_NO, CART_PROD, CART_DATE
 		FROM MEMBER LEFT OUTER JOIN CARTPROD ON (MEM_ID = CART_MEMBER)
 		WHERE MEM_ID = #{memId}    
@@ -109,9 +109,9 @@
     	WHERE MEM_ID = #{memId,jdbcType=VARCHAR}
    </delete>
    
-   <select id="selectMemberForAuth">
+   <select id="selectMemberForAuth" resultType="MemberVO">
    		SELECT MEM_ID, MEM_PASS, MEM_NAME
-   			, MEM_HP, MEM_MAIL, MEM_DELETE
+   			, MEM_HP, MEM_MAIL, MEM_DELETE, MEM_ROLE
    		FROM MEMBER
    		WHERE MEM_ID =#{memId}
    		AND MEM_DELETE IS NULL
