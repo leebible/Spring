@@ -16,7 +16,7 @@
   </Appenders>
   
   <Loggers>
-    <Logger name="org.springframework" level="debug" />
+    <Logger name="org.springframework" level="info" />
     <Logger name="kr.or.ddit" level="info" />
     <Logger name="jdbc.sqltiming" level="debug" />
     <Logger name="jdbc.resultsettable" level="debug" />

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Case2Playground {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = 
-				new ClassPathXmlApplicationContext("/kr/or/ddit/case2/conf/Case2-Context.xml");
+				new ClassPathXmlApplicationContext("/kr/or/ddit/case8/conf/AutoDI-Context.xml");
 		
 		Foo foo = context.getBean("foo1", Foo.class);
 		log.info("foo : {}", foo);

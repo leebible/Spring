@@ -3,12 +3,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 
 <!-- 	BTS 멤버 전원을 조회하고, 해당 정보를 콘솔에 출력. -->
-
-<bean id="btsDAO" class="kr.or.ddit.case4.bts.dao.InMemoryBtsDAOImpl"/>
+<!--    <util:map id="btsMap" key-type="java.lang.String" value-type="java.lang.Object[]/> --> <!-- 밑과 같은 의미지만 추가적인 속성을 넣고싶을때 쓰면됨 -->
+   <bean class="java.util.LinkedHashMap" id="btsMap" /> <!-- key,value제한하지 않음 --> 
+   
+<!--    BTS 멤버 전원을 조회하고, 해당 정보를 콘솔에 출력 -->
+<bean id="btsDAO" class="kr.or.ddit.case4.bts.dao.InMemoryBtsDAOImpl"
+	c:btsMap-ref="btsMap" init-method="init"
+/>
 <bean id="btsService" class="kr.or.ddit.case4.bts.service.btsServiceImpl"
 	c:dao-ref="btsDAO" 
 />

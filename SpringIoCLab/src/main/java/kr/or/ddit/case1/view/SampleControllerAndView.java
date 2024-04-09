@@ -21,7 +21,7 @@ public class SampleControllerAndView { //전략의 주입자
 //		SampleService service = new SampleServiceImpl(dao);
 		
 		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("/kr/or/ddit/case1/conf/Sample-Context.xml"); //클래스 패스 이전의 경로는 필요 없으니 제거
+				new ClassPathXmlApplicationContext("/kr/or/ddit/case8/conf/AutoDI-Context.xml"); //클래스 패스 이전의 경로는 필요 없으니 제거
 		
 		SampleService service = context.getBean(SampleService.class);
 		List<SampleVO> list = service.readSampleList();

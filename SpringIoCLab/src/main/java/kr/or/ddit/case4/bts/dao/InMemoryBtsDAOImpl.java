@@ -5,14 +5,34 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.annotation.Resources;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import java.util.Map.Entry;
 
+import kr.or.ddit.case5.person.dao.PersonDAOImpl;
 import kr.or.ddit.vo.BtsVO;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Repository
+@Data
 public class InMemoryBtsDAOImpl implements BtsDAO {
+	@Resource
+	Map<String, Object[]> btsMap;
+	//1. map이 컨테이너 내부에서 관리
+	//2. 그 map을 여기서 주입받기
+	//3. 주입이 끝난 이후에 lifecycle callback
 	
-	Map<String, Object[]> btsMap = new LinkedHashMap<>();
-	{
+	@PostConstruct
+	public void init(){
 		btsMap.put("B001", new Object[] {"뷔","bts/bui",100});
 		btsMap.put("B002", new Object[] {"제이홉","bts/jhop",200});
 		btsMap.put("B003", new Object[] {"지민","bts/jimin",300});

@@ -2,6 +2,8 @@ package kr.or.ddit.case4.bts.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import kr.or.ddit.case4.bts.dao.BtsDAO;
 import kr.or.ddit.exception.PkNotFoundException;
 import kr.or.ddit.vo.BtsVO;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Service
 @RequiredArgsConstructor
 public class btsServiceImpl implements BtsService {
 	private final BtsDAO dao;
