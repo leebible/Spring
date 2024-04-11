@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.addressbook.dao.AddressbookDAO">
+
+	<resultMap type="AddressbookVO" id="addressMap" autoMapping="true">
+		<id property="adrsNo" column="ADRS_NO"/>
+		<association property="member" javaType="MemberVO" autoMapping="true" />
+	</resultMap>
+
+	<select id="selectAddressBookList" resultType="AddressbookVO">
+		SELECT ADRS_NO, MEM_ID, ADRS_NAME, ADRS_TEL, ADRS_ADD
+		FROM ADDRESSBOOK
+	</select>
+	
+	<select id="selectAddress" resultType="AddressbookVO" parameterType="long">
+	SELECT ADRS_NO, MEM_ID, ADRS_NAME, ADRS_TEL, ADRS_ADD
+		FROM ADDRESSBOOK
+		WHERE ADRS_NO=#{adrsNo}
+	</select>
+	
+	<insert id="insertAddress" parameterType="AddressbookVO" >
+		<selectKey order="BEFORE" keyProperty="adrsNo" resultType="long">
+			SELECT NVL(MAX(ADRS_NO),0)+1
+			FROM ADDRESSBOOK
+		</selectKey>
+		
+	INSERT INTO  ADDRESSBOOK( 
+		ADRS_NO,
+		MEM_ID,
+		ADRS_NAME,
+		ADRS_TEL,
+		ADRS_ADD)
+		VALUES(
+	#{adrsNo, jdbcType=NUMERIC}
+		, #{memId, jdbcType=VARCHAR}
+		, #{adrsName, jdbcType=VARCHAR}
+		, #{adrsTel, jdbcType=VARCHAR}
+		, #{adrsAdd, jdbcType=VARCHAR})
+	</insert>
+
+</mapper>
+

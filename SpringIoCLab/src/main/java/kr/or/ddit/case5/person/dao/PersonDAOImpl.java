@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resources;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
