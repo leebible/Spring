@@ -1,178 +1,147 @@
+<%@page import="kr.or.ddit.prod.controller.ProdUpdateController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<form method="post" enctype="application/x-www-form-urlencoded">
+<form:form modelAttribute="<%=ProdUpdateController.MODELNAME%>"
+	method="post" enctype="application/x-www-form-urlencoded">
 	<table>
 		<tr>
 			<th>상품코드</th>
-			<td>
-				<input type="hidden" name="prodId" 
-					value="${prod.prodId}" class="form-control" readonly/>
-				<span class="text-danger">${errors.prodId}</span>
-			</td>
+			<td><form:input type="text" path="prodId" required="true"
+					class="form-control" />
+				<form:errors path="prodId" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>상품명</th>
-			<td>
-				<input type="text" name="prodName" 
-					value="${prod.prodName}" class="form-control" />
-				<span class="text-danger">${errors.prodName}</span>
-			</td>
+			<td><form:input type="text" path="prodName" required="true"
+					class="form-control" />
+				<form:errors path="prodName" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>상품분류</th>
-			<td>
-				<input type="hidden" name="prodLgu" value="${prod.prodLgu }" />
-				${prod.lprod.lprodNm }
-				<span class="text-danger">${errors.prodLgu}</span>
-			</td>
+			<td><form:input type="text" path="prodLgu" required="true"
+					class="form-control" />
+				<form:errors path="prodLgu" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>거래처</th>
-			<td>
-				<input type="hidden" name="prodBuyer" value="${prod.prodBuyer }" />
-				${prod.buyer.buyerName }
-				<span class="text-danger">${errors.prodBuyer}</span>
-			</td>
+			<td><form:input type="text" path="prodBuyer" required="true"
+					class="form-control" />
+				<form:errors path="prodBuyer" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>구매가</th>
-			<td>
-				<input type="number" name="prodCost" 
-					value="${prod.prodCost}" class="form-control" />
-				<span class="text-danger">${errors.prodCost}</span>
-			</td>
+			<td><form:input type="number" path="prodCost" required="true"
+					class="form-control" />
+				<form:errors path="prodCost" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>판매가</th>
-			<td>
-				<input type="number" name="prodPrice" 
-					value="${prod.prodPrice}" class="form-control" />
-				<span class="text-danger">${errors.prodPrice}</span>
-			</td>
+			<td><form:input type="number" path="prodPrice" required="true"
+					class="form-control" />
+				<form:errors path="prodPrice" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>세일가</th>
-			<td>
-				<input type="number" name="prodSale" 
-					value="${prod.prodSale}" class="form-control" />
-				<span class="text-danger">${errors.prodSale}</span>
-			</td>
+			<td><form:input type="number" path="prodSale" required="true"
+					class="form-control" />
+				<form:errors path="prodSale" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>요약정보</th>
-			<td>
-				<input type="text" name="prodOutline" 
-					value="${prod.prodOutline}" class="form-control" />
-				<span class="text-danger">${errors.prodOutline}</span>
-			</td>
+			<td><form:input type="text" path="prodOutline" required="true"
+					class="form-control" />
+				<form:errors path="prodOutline" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
 			<th>상세정보</th>
-			<td>
-				<textarea name="prodDetail" class="form-control">${prod.prodDetail}</textarea>
-				<span class="text-danger">${errors.prodDetail}</span>
-			</td>
+			<td><form:input type="text" path="prodDetail"
+					class="form-control" />
+				<form:errors path="prodDetail" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td>
-				<input type="text" name="prodImg" 
-					value="${prod.prodImg}" class="form-control" />
-				<span class="text-danger">${errors.prodImg}</span>
-			</td>
+			<td><form:input type="text" path="prodImg" required="true"
+					class="form-control" />
+				<form:errors path="prodImg" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>총재고</th>
-			<td>
-				<input type="number" name="prodTotalstock" 
-					value="${prod.prodTotalstock}" class="form-control" />
-				<span class="text-danger">${errors.prodTotalstock}</span>
-			</td>
+			<td><form:input type="number" path="prodTotalstock"
+					required="true" class="form-control" />
+				<form:errors path="prodTotalstock" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
 			<th>입고일</th>
-			<td>
-				<input type="date" name="prodInsdate"
-					value="${prod.prodInsdate}" class="form-control" />
-				<span class="text-danger">${errors.prodInsdate}</span>
-			</td>
+			<td><form:input type="date" path="prodInsdate"
+					class="form-control" />
+				<form:errors path="prodInsdate" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
 			<th>적정재고</th>
-			<td>
-				<input type="number" name="prodProperstock" 
-					value="${prod.prodProperstock}" class="form-control" />
-				<span class="text-danger">${errors.prodProperstock}</span>
-			</td>
+			<td><form:input type="number" path="prodProperstock"
+					required="true" class="form-control" />
+				<form:errors path="prodProperstock" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
 			<th>크기</th>
-			<td>
-				<input type="text" name="prodSize" value="${prod.prodSize}" class="form-control" />
-				<span class="text-danger">${errors.prodSize}</span>
-			</td>
+			<td><form:input type="text" path="prodSize" class="form-control" />
+				<form:errors path="prodSize" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>색상</th>
-			<td>
-				<input type="text" name="prodColor"
-					value="${prod.prodColor}" class="form-control" />
-				<span class="text-danger">${errors.prodColor}</span>
-			</td>
+			<td><form:input type="text" path="prodColor"
+					class="form-control" />
+				<form:errors path="prodColor" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>배송방법</th>
-			<td>
-				<input type="text" name="prodDelivery"
-					value="${prod.prodDelivery}" class="form-control" />
-				<span class="text-danger">${errors.prodDelivery}</span>
-			</td>
+			<td><form:input type="text" path="prodDelivery"
+					class="form-control" />
+				<form:errors path="prodDelivery" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
 			<th>단위</th>
-			<td>
-				<input type="text" name="prodUnit" value="${prod.prodUnit}" class="form-control" />
-				<span class="text-danger">${errors.prodUnit}</span>
-			</td>
+			<td><form:input type="text" path="prodUnit" class="form-control" />
+				<form:errors path="prodUnit" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>입고량</th>
-			<td>
-				<input type="number" name="prodQtyin"
-					value="${prod.prodQtyin}" class="form-control" />
-				<span class="text-danger">${errors.prodQtyin}</span>
-			</td>
+			<td><form:input type="number" path="prodQtyin"
+					class="form-control" />
+				<form:errors path="prodQtyin" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
 			<th>출고량</th>
-			<td>
-				<input type="number" name="prodQtysale"
-					value="${prod.prodQtysale}" class="form-control" />
-				<span class="text-danger">${errors.prodQtysale}</span>
-			</td>
+			<td><form:input type="number" path="prodQtysale"
+					class="form-control" />
+				<form:errors path="prodQtysale" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
 			<th>마일리지</th>
-			<td>
-				<input type="number" name="prodMileage"
-					value="${prod.prodMileage}" class="form-control" />
-				<span class="text-danger">${errors.prodMileage}</span>
-			</td>
+			<td><form:input type="number" path="prodMileage"
+					class="form-control" />
+				<form:errors path="prodMileage" cssClass="text-danger"
+					element="span" /></td>
 		</tr>
 		<tr>
-			<td colspan="2">
-				<input type="submit" value="저장" class="btn btn-primary"/>
-				<input type="reset" value="취소" class="btn btn-danger"/>
-				<input type="button" value="뒤로가기" class="btn btn-secondary"
-					onclick="history.back();"
-				/>
-			</td>
+			<td colspan="2"><input type="submit" value="저장"
+				class="btn btn-primary" /> <input type="reset" value="취소"
+				class="btn btn-danger" /> <input type="button" value="뒤로가기"
+				class="btn btn-secondary" onclick="history.back();" /></td>
 		</tr>
 	</table>
-</form>	
-<script src="${pageContext.request.contextPath }/resources/js/app/prod/prodForm.js"></script>
+</form:form>
+<script
+	src="${pageContext.request.contextPath }/resources/js/app/prod/prodForm.js"></script>
 
 
 

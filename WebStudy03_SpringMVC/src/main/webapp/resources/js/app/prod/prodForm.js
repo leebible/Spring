@@ -16,8 +16,8 @@ $(function(){
 		$prodBuyer.find(`option:first`).prop(`selected`, true)
 	})
 	$(":input[data-init-value]").each(function(index, ipt){
-		let initValue = $(ipt).data("initValue");
-		$(ipt).val(initValue);
+//		let initValue = $(ipt).data("initValue");
+//		$(ipt).val(initValue);
 		$(ipt).trigger("change");
 	});
 	

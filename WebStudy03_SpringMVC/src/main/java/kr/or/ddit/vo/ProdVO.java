@@ -8,6 +8,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import kr.or.ddit.validate.groups.InsertGroup;
 import kr.or.ddit.validate.groups.UpdateGroup;
 import lombok.Data;
@@ -40,6 +43,7 @@ public class ProdVO implements Serializable{
 	private String prodImg;
 	@Min(0)
 	private long prodTotalstock;
+	@DateTimeFormat(iso = ISO.DATE) //java.util.Date, java.util.Calendar, java.time.* 
 	private LocalDate prodInsdate;
 	@Min(0)
 	private long prodProperstock;

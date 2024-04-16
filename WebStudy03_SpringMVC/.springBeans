@@ -10,6 +10,7 @@
 		<config>src/main/resources/kr/or/ddit/spring/conf/datasource-context.xml</config>
 		<config>src/main/resources/kr/or/ddit/spring/conf/mapper-context.xml</config>
 		<config>src/main/resources/kr/or/ddit/spring/conf/root-context.xml</config>
+		<config>src/main/webapp/WEB-INF/springmvc/serlvet-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
