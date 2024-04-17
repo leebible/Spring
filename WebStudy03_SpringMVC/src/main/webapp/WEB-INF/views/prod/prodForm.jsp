@@ -6,7 +6,8 @@
 
 
 <form:form modelAttribute="${ProdInsertController.MODELNAME }"
-	method="post" enctype="application/x-www-form-urlencoded">
+	method="post" 
+	enctype="multipart/form-data">
 	<table>
 		<tr>
 			<th>상품명</th>
@@ -62,7 +63,8 @@
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td><form:input type="text" path="prodImg" class="form-control" />
+			<td>
+				<input type="file" name="prodImage"  />
 				<form:errors path="prodImg" cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>

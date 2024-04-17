@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kr.or</groupId>
@@ -7,7 +8,7 @@
 	<name>SpringMVCLab01</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-<properties>
+	<properties>
 		<java-version>1.8</java-version>
 		<com.fasterxml.jackson-version>2.16.1</com.fasterxml.jackson-version>
 		<org.apache.logging.log4j-version>2.23.1</org.apache.logging.log4j-version>
@@ -50,7 +51,7 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+
 		<!-- 암호화 지원용 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -117,13 +118,19 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.1.2</version>
 		</dependency>
-		
+
 		<!-- io 유틸리티 -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.16.0</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version>
+		</dependency>
+
 		<!-- Commons 계열 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

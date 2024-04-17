@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,6 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,21 +37,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuthenticateCheckFilter implements Filter{
 
+	@Resource(name="securedResource")
 	private Map<String, String[]> securedResources;
 	
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		securedResources = new LinkedHashMap<>();
-		filterConfig.getServletContext().setAttribute("securedResources", securedResources);
-		ResourceBundle bundle = ResourceBundle.getBundle("kr.or.ddit.SecuredResources");
-		Enumeration<String> keys = bundle.getKeys();
+	@Resource(name="securedProps")
+	private Properties securedProps;
+	
+	public void init() { //spring 컨테이너가 초기화될때 호출
+		
+		
+		Enumeration<Object> keys = securedProps.keys();
 		while (keys.hasMoreElements()) {
 			String uri = (String) keys.nextElement();
-			String[] values = bundle.getString(uri).split(",");
+			String[] values = securedProps.getProperty(uri).split(",");
 			Arrays.sort(values);
 			securedResources.put(uri, values);
 			log.info("{} : {}", uri, values);
 		}
+		
+	}
+	
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
 		
 	}
 

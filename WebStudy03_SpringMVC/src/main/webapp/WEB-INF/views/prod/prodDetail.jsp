@@ -52,7 +52,9 @@
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td>${prod.prodImg}</td>
+			<td>
+				<img src="<c:url value='/resources/images/${prod.prodImg}'/>"/>
+			</td>
 		</tr>
 		<tr>
 			<th>총재고</th>

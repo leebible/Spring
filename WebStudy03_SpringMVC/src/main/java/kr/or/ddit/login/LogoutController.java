@@ -9,15 +9,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 
 
-@WebServlet("/login/logout.do")
+@RequestMapping("/login/logout.do")
 @Controller
 public class LogoutController{
-   @RequestMapping("/login/logout.do")
+	
+	@PostMapping
    public String logout(HttpServletRequest req) throws UnsupportedEncodingException {
       // 현재 사용자의 세션 즉시 만료.
       HttpSession session = req.getSession();
@@ -30,7 +32,7 @@ public class LogoutController{
 //      session.setAttribute("message", message);
       // 웰컴 페이지로 이동.
       message = URLEncoder.encode(message, "UTF-8");
-      return "redirect:/?message="+message;
+      return "redirect:/index.do?message="+message;
       
    }
 }
