@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <form:form modelAttribute="<%=MemberInsertController.MODELNAME%>"
-	method="post" enctype="application/x-www-form-urlencoded">
+	method="post" enctype="multipart/form-data">
 	<table class="table table-bordered">
 		<tr>
 			<th>회원번호</th>
@@ -17,6 +17,13 @@
 			<td><form:input type="text" path="memPass" required="true"
 					class="form-control" /> <form:errors path="memPass"
 					cssClass="text-danger" element="span" /></td>
+		</tr>
+		<tr>
+			<th>프로필이미지</th>
+			<td>
+			<input type="file" name="memImage" />
+			<form:errors path="memImg" cssClass="text-danger" element="span" />
+			</td>
 		</tr>
 		<tr>
 			<th>회원명</th>
@@ -60,13 +67,13 @@
 					cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
-			<th></th>
+			<th>집번호</th>
 			<td><form:input type="text" path="memHometel"
 					class="form-control" /> <form:errors path="memHometel"
 					cssClass="text-danger" element="span" /></td>
 		</tr>
 		<tr>
-			<th></th>
+			<th>회사번호</th>
 			<td><form:input type="text" path="memComtel"
 					class="form-control" /> <form:errors path="memComtel"
 					cssClass="text-danger" element="span" /></td>

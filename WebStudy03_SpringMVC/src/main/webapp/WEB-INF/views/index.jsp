@@ -8,22 +8,7 @@
 <c:set value="${pageContext.request.userPrincipal }" var="principal"/>
 <c:choose>
 	<c:when test="${not empty principal }">
-		<c:set value="${principal.realUser }" var="authMember"/>
-		<a href="<c:url value='/mypage'/>">${authMember.memName }[${authMember.memRole }]</a>
-		<form id="logoutForm" method="post"></form>
-		<a href="<c:url value='/login/logout.do'/>" class="logoutBtn" data-target-form="#logoutForm">로그아웃</a>
-		<script type="text/javascript">
-			document.querySelector("a[data-target-form]").addEventListener("click", (e)=>{
-				e.preventDefault();
-				let aTag = e.target;
-				let formSelector = aTag.dataset.targetForm;
-				let formTag = document.querySelector(formSelector);
-				if(formTag){
-					formTag.action = aTag.href;
-					formTag.requestSubmit();
-				}
-			});
-		</script>
+		
 	</c:when>
 	<c:otherwise>
 		<a href="<c:url value='/login/loginForm.jsp'/>">로그인폼</a>

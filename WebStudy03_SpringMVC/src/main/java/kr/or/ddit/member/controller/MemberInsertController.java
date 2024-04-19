@@ -23,6 +23,11 @@ public class MemberInsertController{
 	public static final String MODELNAME = "member";
 	private final MemberService service; 
 	
+	@ModelAttribute("member")
+	public MemberVO member() {
+		return new MemberVO();
+	}
+	
 	@GetMapping
 	public String memberInsert() {
 		return "member/memberForm";

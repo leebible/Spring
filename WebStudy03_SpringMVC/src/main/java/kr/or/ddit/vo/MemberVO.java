@@ -1,12 +1,17 @@
 package kr.or.ddit.vo;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,6 +35,8 @@ import lombok.ToString;
 @ToString(exclude = {"memPass", "memRegno1", "memRegno2"})
 @EqualsAndHashCode(of = "memId")
 public class MemberVO implements Serializable{
+	private int rnum;
+	
 	@NotBlank(groups = InsertGroup.class)
 	private String memId;
 	@NotBlank(groups = {DeleteGroup.class, Default.class})
@@ -71,6 +78,21 @@ public class MemberVO implements Serializable{
 	
 	// 사용자 역할 정보
 	private String memRole;
+	
+	private byte[] memImg;
+	public void setMemImage(MultipartFile memImage) throws IOException {
+		if (memImage.isEmpty())
+			return;
+		this.memImage = memImage;
+		this.memImg = memImage.getBytes();
+	}
+	
+	public String getMemImgBase64() {
+		if(memImg == null) return null;
+		return Base64.getEncoder().encodeToString(memImg);
+	}
+
+	private MultipartFile memImage;
 }
 
 

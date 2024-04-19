@@ -39,7 +39,7 @@ public class ProdInsertController{
 	public String insertProcess(Model model
 			, @Validated(InsertGroup.class) @ModelAttribute(MODELNAME) ProdVO prod
 			, BindingResult errors
-	) {
+	){
 		
 		String viewName = null;
 		if(!errors.hasErrors()) {

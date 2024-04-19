@@ -19,14 +19,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString.Exclude;
 
-
-
-
-
 @Data
 @EqualsAndHashCode(of = "prodId")
 //@ToString(exclude = "prodDetail")
-public class ProdVO implements Serializable{
+public class ProdVO implements Serializable {
+	private int rnum;
+	
 	@NotBlank(groups = UpdateGroup.class)
 	private String prodId;
 	@NotBlank
@@ -35,27 +33,30 @@ public class ProdVO implements Serializable{
 	private String prodLgu;
 	@NotBlank(groups = InsertGroup.class)
 	private String prodBuyer;
-	@Min(0)	
+	@Min(0)
 	private long prodCost;
-	@Min(0)	
+	@Min(0)
 	private long prodPrice;
-	@Min(0)	
+	@Min(0)
 	private long prodSale;
 	@NotBlank
 	private String prodOutline;
 	@Exclude
 	private String prodDetail;
-	@NotBlank
-	private String prodImg; //DB 데이터를 받기위한 프로퍼티
+	@NotBlank(groups = InsertGroup.class)
+	private String prodImg; // DB 데이터를 받기위한 프로퍼티
+
 	public void setProdImage(MultipartFile prodImage) {
-		if(prodImage.isEmpty()) return;
+		if (prodImage.isEmpty())
+			return;
 		this.prodImage = prodImage;
 		this.prodImg = UUID.randomUUID().toString();
 	}
-    private MultipartFile prodImage; // client의 part 데이터를 받기위한 프로퍼티.
+
+	private MultipartFile prodImage; // client의 part 데이터를 받기위한 프로퍼티.
 	@Min(0)
 	private long prodTotalstock;
-	@DateTimeFormat(iso = ISO.DATE) //java.util.Date, java.util.Calendar, java.time.* 
+	@DateTimeFormat(iso = ISO.DATE) // java.util.Date, java.util.Calendar, java.time.*
 	private LocalDate prodInsdate;
 	@Min(0)
 	private long prodProperstock;
@@ -66,32 +67,8 @@ public class ProdVO implements Serializable{
 	private Long prodQtyin;
 	private Long prodQtysale;
 	private Long prodMileage;
-	
+
 	private BuyerVO buyer; // Has a 관계 (1:1), PROD(1) : BUYER(1) --> ProdVO has a BuyerVO
 	private LprodVO lprod; // Has a 관계 (1:1), PROD(1) : LPROD(1) --> ProdVO has a LprodVO
 	private List<CartVO> cartList; // Has Many
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

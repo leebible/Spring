@@ -5,11 +5,18 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import kr.or.ddit.paging.PaginationInfo;
 import kr.or.ddit.vo.MemberVO;
 
 /**
  * 회원 관리(CRUD)를 위한 Persistence Layer
  *
+ * 페이징 처리 단계
+ * 1. totalRecord / dataList 조회할 수 있는 쿼리 : 동일한 검색 조건 사용
+ * 2. readXXList, retrieveXXXList 로직에서 1번의 메소드 호출
+ * 3. 컨트롤러에서 현재 페이지와 검색 조건을 파라미터로 획득 -> PaginationInfo 로 캡슐화
+ * 4. paging html 구문을 생성할 PaginationRenderer 객체 사용.
+ * 5. view layer 에서 검색과 페이징을 위한 UI 생성(입력UI와 전송UI분리)
  */
 @Mapper
 public interface MemberDAO {
@@ -23,7 +30,8 @@ public interface MemberDAO {
 	 * 회원 목록 조회(아이디, 이름, 휴대폰, 주소, 이메일, 마일리지)
 	 * @return 존재하지 않으면, list.size()==0
 	 */
-	public List<MemberVO> selectMemberList();
+	public List<MemberVO> selectMemberList(PaginationInfo paging);
+	public int selectTotalRecord(PaginationInfo paging);
 	/**
 	 * 회원 상세 조회(엔터티의 모든 컬럼 조회)
 	 * @param memId 
@@ -50,6 +58,8 @@ public interface MemberDAO {
 	 * @return
 	 */
 	public MemberVO selectMemberForAuth(@Param("memId") String memId);
+	
+
 }
 
 

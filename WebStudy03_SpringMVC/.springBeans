@@ -12,6 +12,7 @@
 		<config>src/main/resources/kr/or/ddit/spring/conf/root-context.xml</config>
 		<config>src/main/resources/kr/or/ddit/spring/conf/secured-context.xml</config>
 		<config>src/main/webapp/WEB-INF/springmvc/servlet-context.xml</config>
+		<config>src/main/resources/kr/or/ddit/spring/conf/aop-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

@@ -9,6 +9,10 @@
 			<td>${member.memId}</td>
 		</tr>
 		<tr>
+			<th>프로필이미지<th>
+				<img src="data:image/*;base64,${member.memImgBase64 }"/>
+		</tr>
+		<tr>
 			<th>암호</th>
 			<td>${member.memPass}</td>
 		</tr>
@@ -41,11 +45,11 @@
 			<td>${member.memAdd2}</td>
 		</tr>
 		<tr>
-			<th></th>
+			<th>집번호</th>
 			<td>${member.memHometel}</td>
 		</tr>
 		<tr>
-			<th></th>
+			<th>회사번호</th>
 			<td>${member.memComtel}</td>
 		</tr>
 		<tr>
